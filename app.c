@@ -1,5 +1,6 @@
 #include "filling_data.h"
 
+
 int main(void)
 {
     char * values;
@@ -11,8 +12,7 @@ int main(void)
         printf("player %d turn\n", turn);
         values = scan_validity();
         values = check_if_line_exist(values,horizontal_line,vertical_line);
-        fill_data_into_matrices(values, horizontal_line, vertical_line, turn, &i_1, &j_1);
-        
+        fill_data_into_matrices(values);
         check_boxes(horizontal_line,vertical_line,box,turn,vertical_or_horizontal(values), i_1, j_1);
         print_matrices(horizontal_line, vertical_line);
         print_box_matrix(box);

@@ -1,26 +1,20 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "filling_data.h"
 
-#define game_height 3 //the height of the game in boxes (number of rows of boxes)
-#define game_width 3 //the width of the game in boxes (number of columns of boxes)
-
-
-
-void fill_data_into_matrices(char values[],char horizontal_line[game_height + 1][game_width], char vertical_line[game_height][game_width +1], char turn, char* i_1, char* j_1)
+void fill_data_into_matrices(char values[])
 {
     if(values[0] == values[1])
     {
         if(values[2] < values[3])
         {
             horizontal_line[values[0]][values[2]] = turn;
-            *i_1 = values[0];
-            *j_1 = values[2];
+            i_1 = values[0];
+            j_1 = values[2];
         }
         else
         {
             horizontal_line[values[0]][values[3]] = turn;
-            *i_1 = values[0];
-            *j_1 = values[3];
+            i_1 = values[0];
+            j_1 = values[3];
         }
     }
     else if(values[2] == values[3])
@@ -28,14 +22,14 @@ void fill_data_into_matrices(char values[],char horizontal_line[game_height + 1]
         if(values[0] < values[1])
         {
             vertical_line[values[0]][values[2]] = turn;
-            *i_1 = values[0];
-            *j_1 = values[2];
+            i_1 = values[0];
+            j_1 = values[2];
         }
         else
         {
             vertical_line[values[1]][values[2]] = turn;
-            *i_1 = values[1];
-            *j_1 = values[2];
+            i_1 = values[1];
+            j_1 = values[2];
         }
         
     }
@@ -54,7 +48,7 @@ char vertical_or_horizontal(char values[])
     }
 } // use part of this to indicate that line horizontal or vertical
 
-void Zeroing_matrices(char horizontal_line[game_height + 1][game_width],char vertical_line[game_height][game_width + 1])
+void Zeroing_matrices()
 {
     for(int i = 0; i < game_height; i++)
     {
@@ -72,7 +66,7 @@ void Zeroing_matrices(char horizontal_line[game_height + 1][game_width],char ver
     }
 }
 
-void print_matrices(char horizontal_line[game_height + 1][game_width],char vertical_line[game_height][game_width +1])
+void print_matrices()
 {
     printf("horizontal line matrix : \n");
     for(int i = 0; i < game_height + 1; i++)
@@ -625,7 +619,7 @@ void check_boxes (char horizontal_line [game_height+1][game_width], char vertica
     }
 }
 
-int number_of_closed_boxes(char box[game_height][game_width], char *n_player1, char *n_player2)
+char number_of_closed_boxes()
 {
     char sum = 0;
     char p1 = 0, p2 = 0;
@@ -645,12 +639,12 @@ int number_of_closed_boxes(char box[game_height][game_width], char *n_player1, c
             }
         }
     }
-    *n_player1 = p1;
-    *n_player2 = p2;
+    n_player1 = p1;
+    n_player2 = p2;
     return sum;
 }
 
-void print_box_matrix(char box[game_height][game_width])
+void print_box_matrix()
 {
     for (int i = 0; i < game_height; i++)
     {

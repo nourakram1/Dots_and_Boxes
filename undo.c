@@ -8,7 +8,7 @@ void push_move(char is_closed, char l_r, char is_chain)
         free_stack(redo_stack);
     }
 
-    play *new = create_play_node(h_v, i_1, j_1,turn,is_closed, l_r, is_chain); //initializing a node
+    play *new = create_play_node(h_v, i_1, j_1, turn, is_closed, l_r, is_chain); //initializing a node
     
     if(undo_stack->turn != new->turn) // freeing the undo stack if the turn has changed
     {

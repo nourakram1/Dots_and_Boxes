@@ -36,13 +36,12 @@ char h_v;
 
 char * check_if_line_exist (char values[], char horizontal_line[game_height + 1][game_width], char vertical_line[game_height][game_width +1]);
 char * scan_validity (void);
-void print_matrices(char horizontal_line[game_height + 1][game_width], char vertical_line[game_height][game_width +1]);
-void Zeroing_matrices(char horizontal_line[game_height + 1][game_width], char vertical_line[game_height][game_width + 1]);
-void fill_data_into_matrices(char values[], char horizontal_line[game_height + 1][game_width], char vertical_line[game_height][game_width +1]);
-void chain (int i, int j,char horizontal_line [game_height+1][game_width], char vertical_line [game_height][game_width+1],char box[game_height][game_width],char chain_1 [game_height][game_width],char turn);
-void check_boxes (char horizontal_line [game_height+1][game_width], char vertical_line [game_height][game_width+1],char box[game_height][game_width],char chain_1 [game_height][game_width],char turn);
-int number_of_closed_boxes(char box[game_height][game_width], int *n_player1, int *n_player2);
-void print_box_matrix(char box[game_height][game_width]);
+void print_matrices();
+void Zeroing_matrices();
+void fill_data_into_matrices(char values[]);
+char chain (int i, int j,char h_v,char l_r,char horizontal_line [game_height+1][game_width], char vertical_line [game_height][game_width+1],char box[game_height][game_width],char turn);
+char number_of_closed_boxes();
+void print_box_matrix();
 void push_move(char is_closed, char l_r, char is_chain);
 void undo(void);
 void redo(void);
@@ -51,5 +50,4 @@ void free_stack(play * stack);
 void print_stack(play * stack);
 play * create_play_node(char h_v, char i_1 , char j_1, char turn, char is_closed, char l_r, char is_chain);
 void change_matrices(play *stack);
-
 #endif
