@@ -1,32 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-#define game_height 3 //the height of the game in boxes (number of rows of boxes)
-#define game_width 3 //the width of the game in boxes (number of columns of boxes)
-
-typedef struct play{
-    char turn; //takes the value of the player 1 or 2
-    char h_v;
-    char i_1;
-    char j_1;
-    char is_closed;
-    char l_r; 
-    char is_chain; // an indicator that indicates that move done by dfs or not
-    struct play *next; // a pointer to the next move in the stack
-} play;
-
-char turn;
-char h_v; 
-char i_1;
-char j_1;
-
-play * undo_stack = NULL;
-play * redo_stack = NULL;
-
-char horizontal_line[game_height + 1][game_width];
-char vertical_line[game_height][game_width +1];
-char box [game_height][game_width];
-
+#include "filling_data.h"
 
 void push_move(char is_closed, char l_r, char is_chain)
 {
