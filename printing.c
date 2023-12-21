@@ -80,7 +80,7 @@ void print_vert_line(int i, int j)
     }
 }
 
-void print_vert_line_indexes(void)
+void print_vert_line_indexes()
 {
     space(3);
     for(int i = 1; i <= game_width + 1; i++)
@@ -108,16 +108,17 @@ void print_coloum(int i)
     for(int h = 0; h < HEIGHT_OF_VERT_LINE; h++)
     {
         space(3);
-        for(int j = 0; j < game_height; j++)
+        for(int j = 0; j < game_width; j++)
         {
             print_vert_line(i, j);
             print_area(i, j);
         }
+        print_vert_line(i, game_width);
         new_line(1);
     }
 }
 
-void print_grid(void)
+void print_grid()
 {
     print_vert_line_indexes();
     for(int i = 0; i < game_height; i++)
