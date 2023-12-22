@@ -1,8 +1,6 @@
-#include "filling_data.h"
-
+#include "data.h"
 play * undo_temp = NULL;
 play * redo_temp = NULL;
-
 void free_stack(play * stack) // ..
 {
     if(undo_stack != NULL)
@@ -17,7 +15,7 @@ void free_stack(play * stack) // ..
     }
 }// at the end the value of stack = NULL
 
-play * create_play_node(char is_closed, char l_r, char is_chain)
+play * create_play_node(char i_1,char j_1, char is_closed, char l_r, char is_chain)
 {
     play * new = malloc(1 * sizeof(play)); // creeating a node in the heep
     new->h_v = h_v;
@@ -30,14 +28,14 @@ play * create_play_node(char is_closed, char l_r, char is_chain)
     return new;
 }
 
-void push_move(char is_closed, char l_r, char is_chain)//true
+void push_move(char i_1, char j_1, char is_closed, char l_r, char is_chain)//true
 {
     if(redo_stack != NULL) // freeing the redo if it is not empty
     {
         free_stack(redo_stack);
     }
 
-    play *new = create_play_node(is_closed, l_r, is_chain); //initializing a node
+    play *new = create_play_node(i_1,j_1,is_closed, l_r, is_chain); //initializing a node
 
     if(undo_stack != NULL)
     {
@@ -50,7 +48,6 @@ void push_move(char is_closed, char l_r, char is_chain)//true
     new->next = undo_stack; // which is equal to NULL if the turn changed
     undo_stack = new; // add the node to the stack
 }
-
 void print_stack(play * stack) // true
 {
     play *temp = stack;
@@ -68,6 +65,7 @@ void print_stack(play * stack) // true
 
 void undo(void) //..
 {
+    
     if(undo_stack == NULL || undo_stack->turn != turn)//the last condition was added for a single non handeled condition
     {
         printf("There are no moves to undo !\n");

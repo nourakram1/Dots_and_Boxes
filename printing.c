@@ -5,10 +5,10 @@
 #define COLOR_BLUE          "\x1b[34m"
 #define BACKGROUND_RED      "\x1b[41m"
 #define BACKGROUND_BLUE     "\x1b[44m"
-#define HORIZONTAL_LINE     "------------"
+#define HORIZONTAL_LINE     "-------"
 #define VERTICAL_LINE       "|"
-#define SPACE               "            "
-#define HEIGHT_OF_VERT_LINE 6
+#define SPACE               "       "
+#define HEIGHT_OF_VERT_LINE 3
 #define DOT                 "+"
 
 void dot()
