@@ -1,6 +1,7 @@
 #include "data.h"
 #include "filling_data.h"
 
+
 void fill_data_into_matrices(char values[])
 {
     if(values[0] == values[1])
@@ -246,7 +247,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                     return 0;
                 }
             }
-            else if(chain(i+1,j,1,2,0)&&chain(i+1,j,2,1,0)&&chain(i+1,j,2,2,0))
+            else if(chain(i+1,j,1,2,0)&&chain(i+1,j,2,2,0)&&chain(i+1,j,2,1,0))
             {// + like chain
     
                 chain(i+1,j,1,2,turn);
@@ -340,7 +341,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                     return 0;
                 }
             }
-            else if(chain(i-1,j,1,1,0)&&chain(i-1,j,2,1,0)&&chain(i-1,j,2,2,0))
+            else if(chain(i-1,j,1,2,0)&&chain(i-1,j,2,2,0)&&chain(i-1,j,2,1,0))
             {
                 chain(i-1,j,1,1,turn);
                 chain(i-1,j,2,1,turn);
@@ -356,7 +357,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                 return 0;
             }
         }
-        else
+        else 
         {
             if (horizontal_line[i][j] == 0)
             {
@@ -368,6 +369,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             }
 
         }
+       
        
     }
 
@@ -438,7 +440,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                 }
                 
             }
-            else if(chain(i,j+1,1,1,0)&&chain(i,j+1,1,2,0)&&chain(i,j+1,2,2,0))
+            else if(chain(i,j+1,2,2,0)&&chain(i,j+1,1,1,0)&&chain(i,j+1,1,2,0))
             {
                 chain(i,j+1,1,1,turn);
                 chain(i,j+1,1,2,turn);
@@ -534,7 +536,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
 
          
             }
-            else if(chain(i,j-1,1,1,0)&&chain(i,j-1,1,2,0)&&chain(i,j-1,2,1,0))
+            else if(chain(i,j-1,2,1,0)&&chain(i,j-1,1,2,0)&&chain(i,j-1,1,1,0))
             {
                 chain(i,j-1,1,1,turn);
                 chain(i,j-1,1,2,turn);
@@ -550,7 +552,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                 return 0;
             }
         }
-        else
+        else 
         {
             if(vertical_line[i][j] == 0)
             {
@@ -562,7 +564,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             } 
 
         }
-
 
         
     }
@@ -608,6 +609,8 @@ void check_boxes (void)
                         {
                             vertical_line[i_1][j_1]=turn;
                         }
+
+
                     }
                     else
                     {
