@@ -182,7 +182,21 @@ void search_for_three_and_not_chain()
     }
 }
 
-void search_for_zero_and_one()
+void search_for_one()
+{
+    for(int i = 0; i < game_height; i++)
+    {
+        for(int j = 0; j < game_width; j++)
+        {
+            if (box_edges[i][j] == 1)
+            {
+                add_node(i, j, 1);
+            }
+        }
+    }
+}
+
+void search_for_zero()
 {
     for(int i = 0; i < game_height; i++)
     {
@@ -191,10 +205,6 @@ void search_for_zero_and_one()
             if(box_edges[i][j] == 0)
             {
                 add_node(i, j, 0);
-            }
-            else if (box_edges[i][j] == 1)
-            {
-                add_node(i, j, 1);
             }
         }
     }
@@ -265,7 +275,23 @@ void computer_play()
         free_box_stack();
         return;
     }
-    search_for_zero_and_one();
+    search_for_zero();
+    if(box_stack != NULL)
+    {
+        srand( time(NULL) );
+        play = get_node_from_stack(rand() % box_stack_length());
+        if(rand() % 2 == 0)
+        {
+            AI_play (play->i, play->j);
+        }
+        else
+        {
+            AI_play_2 (play->i, play->j);
+        }
+        free_box_stack();
+        return;
+    }
+    search_for_one();
     if(box_stack != NULL)
     {
         srand( time(NULL) );
