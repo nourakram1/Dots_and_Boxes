@@ -9,7 +9,7 @@ void print_matrices();
 void fill_data_into_matrices(char values[]);
 void check_boxes (void);
 char vertical_or_horizontal(char values[]);
-char chain (int i, int j,char h_v,char l_r,char turn);
+char chain (int i, int j,char h_v,char l_r,char turn, char is_plus);
 char number_of_closed_boxes();
 void print_box_matrix();
 void menu (void);

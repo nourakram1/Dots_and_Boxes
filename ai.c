@@ -5,19 +5,19 @@ char is_chain (char i, char j) // take a box has three edges to check with ai is
 {
     if(!horizontal_line[i][j]) // horizontal line from up
     {
-        return chain(i,j,1,1,0);
+        return chain(i,j,1,1,0,1);
     }
     else if(!horizontal_line[i+1][j]) // horezontal line from down
     {
-        return chain(i,j,1,2,0);
+        return chain(i,j,1,2,0,1);
     }
     else if(!vertical_line[i][j]) // vertical left
     {
-        return chain(i,j,2,1,0);
+        return chain(i,j,2,1,0,1);
     }
     else
     {
-        return chain(i,j,2,2,0); // vertival right
+        return chain(i,j,2,2,0,1); // vertival right
     }
 
 }
