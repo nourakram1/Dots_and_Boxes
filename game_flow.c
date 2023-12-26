@@ -198,7 +198,7 @@ char * scan_string(void)
         i++;
         scanf("%c",&c);
     }
-    s[i+1]='\0';
+    s[i+1] = NULL;
     return s;
 }
 void count_box_edges (void)
