@@ -38,8 +38,8 @@ typedef struct play{
     char h_v;
     char i_1;
     char j_1;
-    char is_closed;
-    char l_r;
+    char box_i;
+    char box_j;
     char is_chain; // an indicator that indicates that move done by dfs or not
     struct play *next; // a pointer to the next move in the stack
 } play;

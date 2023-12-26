@@ -15,7 +15,7 @@ void print_box_matrix();
 void menu (void);
 void game_flow(void);
 void reset (void);
-void push_move(char i_1, char j_1, char is_closed, char l_r, char is_chain);
+void push_move(char i_1, char j_1, char box_i, char box_j, char is_chain, char h_v_);
 void undo (void);
 void redo (void);
 void free_stack (play * stack);
