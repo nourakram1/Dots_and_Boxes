@@ -3,14 +3,14 @@ play * undo_temp = NULL;
 play * redo_temp = NULL;
 void free_stack(play * stack) // ..
 {
-    if(undo_stack != NULL)
+    if(stack != NULL)
     {
         play *temp;
-        while(undo_stack != NULL)
+        while(stack != NULL)
         {
-            temp = undo_stack->next;
-            free(undo_stack);
-            undo_stack = temp;
+            temp = stack->next;
+            free(stack);
+            stack = temp;
         }
     }
 }// at the end the value of stack = NULL
@@ -36,14 +36,6 @@ void push_move(char i_1, char j_1, char box_i, char box_j, char is_chain, char h
     }
 
     play *new = create_play_node(i_1, j_1, box_i, box_j, is_chain, h_v_); //initializing a node
-
-    if(undo_stack != NULL)
-    {
-        if(undo_stack->turn != turn) // freeing the undo stack if the turn has changed
-        {
-            free_stack(undo_stack);
-        }
-    }
     
     new->next = undo_stack; // which is equal to NULL if the turn changed
     undo_stack = new; // add the node to the stack
@@ -65,7 +57,6 @@ void print_stack(play * stack) // true
 
 void undo(void) //..
 {
-    
     if(undo_stack == NULL || undo_stack->turn != turn)//the last condition was added for a single non handeled condition
     {
         printf("There are no moves to undo !\n");
