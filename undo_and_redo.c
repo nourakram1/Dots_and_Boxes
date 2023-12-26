@@ -101,6 +101,19 @@ void undo(void) //..
 
     if(undo_stack->is_chain == 0)
     {
+        if(undo_stack != NULL)
+        {
+            if(undo_stack->h_v == 1)
+            {
+                horizontal_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
+            }
+            else
+            {
+                vertical_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
+            }
+            box[undo_stack->box_i][undo_stack->box_j] = 0;
+        }
+
         redo_temp = redo_stack; //redo [^redo_stack and ^redo_temp, ____,  ....] e.i redo temp points at the first node in redo stack
         redo_stack = undo_stack; // makes the redo_stack pointer points at the first node in the undo stack
         undo_temp = undo_stack->next; // making a temp pointer point at the second node of the undo stack (to not to lose the rest of undo_stack)
@@ -111,6 +124,19 @@ void undo(void) //..
     {
         while(undo_stack->is_chain == 1)
         {
+            if(undo_stack != NULL)
+            {
+                if(undo_stack->h_v == 1)
+                {
+                    horizontal_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
+                }
+                else
+                {
+                    vertical_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
+                }
+                box[undo_stack->box_i][undo_stack->box_j] = 0;
+            }
+            
             redo_temp = redo_stack; //redo [^redo_stack and ^redo_temp, ____,  ....] e.i redo temp points at the first node in redo stack
             redo_stack = undo_stack; // makes the redo_stack pointer points at the first node in the undo stack
             undo_temp = undo_stack->next; // making a temp pointer point at the second node of the undo stack (to not to lose the rest of undo_stack)
@@ -132,21 +158,23 @@ void redo(void) //..
         return ;
     }
 
-    if(redo_stack != NULL)
-    {
-        if(redo_stack->h_v == 1)
-        {
-            horizontal_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
-        }
-        else
-        {
-            vertical_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
-        }
-        box[redo_stack->box_i][redo_stack->box_j] = redo_stack->turn;
-    }
-
     if(redo_stack->is_chain == 0)
     {
+        if(redo_stack != NULL)
+        {
+            if(redo_stack->h_v == 1)
+            {
+                horizontal_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
+            }
+            else
+            {
+                vertical_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
+            }
+            box[redo_stack->box_i][redo_stack->box_j] = redo_stack->turn;
+        }
+        
+
+
         undo_temp = undo_stack; //redo [^redo_stack and ^redo_temp, ____,  ....] e.i redo temp points at the first node in redo stack
         undo_stack = redo_stack; // makes the redo_stack pointer points at the first node in the undo stack
         redo_temp = redo_stack->next; // making a temp pointer point at the second node of the undo stack (to not to lose the rest of undo_stack)
@@ -157,6 +185,19 @@ void redo(void) //..
     {
         while(redo_stack->is_chain == 1)
         {
+            if(redo_stack != NULL)
+            {
+                if(redo_stack->h_v == 1)
+                {
+                    horizontal_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
+                }
+                else
+                {
+                    vertical_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
+                }
+                box[redo_stack->box_i][redo_stack->box_j] = redo_stack->turn;
+            }
+            
             undo_temp = undo_stack; //redo [^redo_stack and ^redo_temp, ____,  ....] e.i redo temp points at the first node in redo stack
             undo_stack = redo_stack; // makes the redo_stack pointer points at the first node in the undo stack
             redo_temp = redo_stack->next; // making a temp pointer point at the second node of the undo stack (to not to lose the rest of undo_stack)
