@@ -19,7 +19,7 @@ void push_move(char i_1, char j_1, char is_closed, char l_r, char is_chain);
 void undo (void);
 void redo (void);
 void free_stack (play * stack);
-char * scan_string(void);
+char * scan_string(char length);
 void count_box_edges (void);
 void zero_edges (void);
 char is_chain (char i, char j);

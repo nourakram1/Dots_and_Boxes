@@ -79,8 +79,8 @@ void print_matrices(void)
 
 char * scan_validity (void)
 {
-    char input [5];
-    scanf("%4s",input);
+   char input [10];
+    scanf("%5s",input);
     if(strlen(input) > 4 )
     {
         return scan_validity();

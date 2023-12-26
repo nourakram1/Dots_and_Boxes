@@ -7,19 +7,18 @@
 // no of edges for each box
 void menu (void)
 {
-    char input[6];
+    char input[10];
     printf(ANSI_COLOR_MAGENTA ANSI_BACKGROUND_CYAN ANSI_STYLE_BOLD "\n \n \n \t \t \t \t \t \t Dots And Boxes\n\n" ANSI_RESET_ALL);
     printf("\n\n");
     do{
         printf(ANSI_COLOR_MAGENTA "Enter\n");
         printf("N: For New Game\nR: For Load Game\nP: For Players Rank\nE: For Exit\n" ANSI_RESET_ALL);
         printf("Input: ");
-        scanf("%s", input);
+        strcpy(input,scan_string(2)); 
         if(input[0] >= 65 && input[0] <= 90)
         {
             input[0] = input[0] - 65 + 97;
         }
-        while(getchar()!='\n');
     }while (input[0] != 'r' && input[0] != 'e' && input[0] != 'n' && input[0] != 'p' || strlen(input) != 1);
 
 
@@ -44,8 +43,7 @@ void menu (void)
         do
         {
             printf("Enter Game Size From 2 x 2 Till 9 x 9 In This Form (Row x Columbs)\n");
-            fgets(input,6,stdin);
-            while(getchar()!='\n');
+            strcpy(input,scan_string(6));
             game_height = input[0]-48;
             game_width = input[4]-48;
             c = input[2];
@@ -56,22 +54,21 @@ void menu (void)
         {
             printf("Enter 1 : For 1 VS 1\nEnter 2 : For Computer Mode\n");
             printf("Input: ");
-            scanf("%1s",input);
-            while(getchar()!='\n');
+            strcpy(input,scan_string(2));
             mode = input [0]-48;
 
         }while (mode != 1 && mode != 2 || strlen(input)!=1);
         if(mode == 1)
         {
             printf("Enter Player 1 Name : ");
-            strcpy(player_1_name,scan_string());
+            strcpy(player_1_name,scan_string(30));
             printf("Enter Player 2 Name : ");
-            strcpy(player_2_name,scan_string());
+            strcpy(player_2_name,scan_string(30));
         }
         else
         {
             printf("Enter Player 1 Name : " ANSI_RESET_ALL);
-            strcpy(player_1_name,scan_string());
+            strcpy(player_1_name,scan_string(30));
             strcpy(player_2_name,"Computer");
 
         }
@@ -186,19 +183,23 @@ void reset (void)
 
 }
 
-char * scan_string(void)
+char * scan_string(char length) // take actual char need to be readed and clear the buffer
 {
     char c;
-    string s = malloc (31); // support till 30 char name;
+    string s = malloc (length+1);
     int i=0;
     scanf("%c",&c);
-    while (c!=10 && i < 30)
+    while (c!=10 && i < length)
     {
         s[i]=c;
         i++;
         scanf("%c",&c);
     }
-    s[i+1] = NULL;
+    s[i] = '\0';
+    if(i==length)
+    {
+        while(getchar()!='\n');
+    }
     return s;
 }
 void count_box_edges (void)

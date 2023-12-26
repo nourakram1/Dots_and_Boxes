@@ -57,8 +57,8 @@ extern char box_edges [max_game_height][max__game_width];
 
 extern char n_player1;
 extern char n_player2;
-extern char player_1_name[30];
-extern char player_2_name[30];
+extern char player_1_name[31]; // assume max size is  30
+extern char player_2_name[31]; 
 extern char turn;
 extern char temp;
 extern char mode;
