@@ -36,8 +36,6 @@ void menu (void)
     }
     else if (input[0] == 'n' || input[0] == 'N')
     { // prepare reset and all stuff neede
-        free_undo_stack();
-        free_redo_stack();
         reset ();
         char c;
         do
@@ -212,6 +210,8 @@ void game_flow(void)
 
 void reset (void)
 {
+    free_redo_stack();
+    free_undo_stack();
     for(int i = 0; i < max_game_height ;i++)
     {
         for(int j = 0; j < max__game_width; j++)
