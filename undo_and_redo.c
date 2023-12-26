@@ -44,7 +44,7 @@ void push_move(char i_1, char j_1, char box_i, char box_j, char is_chain, char h
             free_stack(undo_stack);
         }
     }
-
+    
     new->next = undo_stack; // which is equal to NULL if the turn changed
     undo_stack = new; // add the node to the stack
 }
@@ -112,24 +112,20 @@ void undo(void) //..
 
 void redo(void) //..
 {
-    if(redo_stack == NULL || redo_stack->turn != turn)//the last condition was added for a single non handeled condition
+    if(redo_stack == NULL)//the last condition was added for a single non handeled condition
     {
         printf("There are no moves to redo !\n");
-        return ;
+        return;
     }
-
-    if(redo_stack != NULL)
+    if(redo_stack->h_v == 1)
     {
-        if(redo_stack->h_v == 1)
-        {
-            horizontal_line[(int)redo_stack->i_1][(int)redo_stack->j_1] = redo_stack->turn;
-        }
-        else
-        {
-            vertical_line[(int)redo_stack->i_1][(int)redo_stack->j_1] = redo_stack->turn;
-        }
-        box[undo_stack->box_i][undo_stack->box_j] = turn;
+        horizontal_line[(int)redo_stack->i_1][(int)redo_stack->j_1] = redo_stack->turn;
     }
+    else
+    {
+        vertical_line[(int)redo_stack->i_1][(int)redo_stack->j_1] = redo_stack->turn;
+    }
+    box[undo_stack->box_i][undo_stack->box_j] = turn;
 
     if(redo_stack->is_chain == 0)
     {
