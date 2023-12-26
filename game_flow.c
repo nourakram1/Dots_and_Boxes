@@ -25,8 +25,8 @@ void menu (void)
     if(input[0] == 'e' || input[0] == 'E')
     {
         printf(ANSI_COLOR_MAGENTA "game closed succesfully !\n" ANSI_RESET_ALL);
-        free_stack(undo_stack);
-        free_stack(redo_stack);
+        free_undo_stack();
+        free_redo_stack();
         exit(EXIT_SUCCESS);
         
     }
@@ -36,8 +36,8 @@ void menu (void)
     }
     else if (input[0] == 'n' || input[0] == 'N')
     { // prepare reset and all stuff neede
-        free_stack(undo_stack);
-        free_stack(redo_stack);
+        free_undo_stack();
+        free_redo_stack();
         reset ();
         char c;
         do
@@ -175,14 +175,14 @@ void game_flow(void)
             if(turn == 1)
             {
                 turn = 2;
-                free_stack(undo_stack);
-                free_stack(redo_stack);
+                free_undo_stack();
+                free_redo_stack();
             }
             else
             {
                 turn = 1;
-                free_stack(undo_stack);
-                free_stack(redo_stack);
+                free_undo_stack();
+                free_redo_stack();
             }
         }
         else
