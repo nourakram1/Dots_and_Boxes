@@ -24,5 +24,6 @@ void count_box_edges (void);
 void zero_edges (void);
 char is_chain (char i, char j);
 void computer_play();
+void ask_for_U_R (void);
 
 #endif

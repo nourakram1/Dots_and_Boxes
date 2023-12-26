@@ -88,6 +88,62 @@ void game_flow(void)
     printf("\n\n");
     while(number_of_closed_boxes() != game_height * game_width)
     {
+        char input [5];
+        if(undo_stack != NULL && redo_stack == NULL)
+        {
+            printf("Enter U For undo, else for continue : ");
+            strcpy(input,scan_string(2));
+            if(input[0] >= 65 && input[0] <= 90)
+            {
+                input[0] = input[0] - 65 + 97;
+            }
+            if(input[0]=='u' || input[0]=='U')
+            {
+                undo();
+                print_grid();
+                temp = number_of_closed_boxes();
+                continue;
+            }
+
+        }
+        else if (undo_stack == NULL && redo_stack != NULL)
+        {
+            printf("Enter R For REDO, Else For Continue : ");
+            strcpy(input,scan_string(2));
+            if(input[0] >= 65 && input[0] <= 90)
+            {
+                input[0] = input[0] - 65 + 97;
+            }
+            if(input[0]=='r' || input[0]=='R')
+            {
+                redo();
+                print_grid();
+                temp = number_of_closed_boxes();
+                continue;
+            }
+
+        }
+        else if(undo_stack != NULL && redo_stack != NULL)
+        {
+            printf("Enter U For Undo,Enter R For REDO, Else For Continue : ");
+            strcpy(input,scan_string(2));
+            if(input[0]=='r' || input[0]=='R')
+            {
+                redo();
+                print_grid();
+                temp = number_of_closed_boxes();
+                continue;
+            }
+            else if(input[0]=='U' || input[0]=='u')
+            {
+                undo();
+                print_grid();
+                temp = number_of_closed_boxes();
+                continue;
+            }
+        }
+
+
         if(turn == 1)
         {
             printf(ANSI_COLOR_RED "Player %d : %s's Turn : " ANSI_RESET_ALL , turn, player_1_name);
@@ -119,10 +175,14 @@ void game_flow(void)
             if(turn == 1)
             {
                 turn = 2;
+                free_stack(undo_stack);
+                free_stack(redo_stack);
             }
             else
             {
                 turn = 1;
+                free_stack(undo_stack);
+                free_stack(redo_stack);
             }
         }
         else
@@ -131,6 +191,8 @@ void game_flow(void)
 
         }
     }
+
+
     if(n_player1 > n_player2)
     {
         printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_1_name);

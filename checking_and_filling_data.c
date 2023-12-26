@@ -609,11 +609,11 @@ void check_boxes (void)
                         }
                         if(i == i_1 && j == j_1)
                         {
-                            chain(i, j, h_v, 1, turn,1);
+                            push_move(i_1,j_1,i,j,chain(i, j, h_v, 1, turn,1),h_v);
                         }
                         else
                         {
-                            chain(i, j, h_v, 2, turn,1);
+                           push_move(i_1,j_1,i,j,chain(i, j, h_v, 2, turn,1),h_v);
 
                         }
                         box[i][j]=turn;
