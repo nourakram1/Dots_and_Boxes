@@ -85,6 +85,8 @@ void game_flow(void)
 {
     char * values;
     printf("\n\n");
+    printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
+    printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n" ANSI_RESET_ALL, player_2_time);
     print_grid();
     printf("\n\n");
     while(number_of_closed_boxes() != game_height * game_width)
@@ -96,7 +98,22 @@ void game_flow(void)
             if(undo_stack != NULL && redo_stack == NULL)
             {
                 printf("Enter U For undo, else for continue : ");
-                strcpy(input,scan_string(9));
+                if(turn == 1)
+                {
+                    temp_begin = time(NULL);
+                    strcpy(input,scan_string(9));
+                    temp_end = time(NULL);
+                    player_1_time += difftime(temp_end, temp_begin);
+                }
+                else if (turn == 2)
+                {
+                    temp_begin = time(NULL);
+                    strcpy(input,scan_string(9));
+                    temp_end = time(NULL);
+                    player_2_time += difftime(temp_end, temp_begin);
+                }
+
+
                 if(input[0] >= 65 && input[0] <= 90)
                 {
                     input[0] = input[0] - 65 + 97;
@@ -104,6 +121,8 @@ void game_flow(void)
                 if(input[0]=='u' || input[0]=='U' && strlen(input) == 1)
                 {
                     undo();
+                    printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
+                    printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n" ANSI_RESET_ALL, player_2_time);
                     print_grid();
                     temp = number_of_closed_boxes();
                     continue;
@@ -113,7 +132,20 @@ void game_flow(void)
             else if (undo_stack == NULL && redo_stack != NULL)
             {
                 printf("Enter R For REDO, Else For Continue : ");
-                strcpy(input,scan_string(9));
+                if(turn == 1)
+                {
+                    temp_begin = time(NULL);
+                    strcpy(input,scan_string(9));
+                    temp_end = time(NULL);
+                    player_1_time += difftime(temp_end, temp_begin);
+                }
+                else if (turn == 2)
+                {
+                    temp_begin = time(NULL);
+                    strcpy(input,scan_string(9));
+                    temp_end = time(NULL);
+                    player_2_time += difftime(temp_end, temp_begin);
+                }
                 if(input[0] >= 65 && input[0] <= 90)
                 {
                     input[0] = input[0] - 65 + 97;
@@ -121,6 +153,8 @@ void game_flow(void)
                 if(input[0]=='r' || input[0]=='R' && strlen(input) == 1)
                 {
                     redo();
+                    printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
+                    printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n" ANSI_RESET_ALL, player_2_time);
                     print_grid();
                     temp = number_of_closed_boxes();
                     continue;
@@ -130,10 +164,25 @@ void game_flow(void)
             else if(undo_stack != NULL && redo_stack != NULL)
             {
                 printf("Enter U For Undo,Enter R For REDO, Else For Continue : ");
-                strcpy(input,scan_string(9));
+                if(turn == 1)
+                {
+                    temp_begin = time(NULL);
+                    strcpy(input,scan_string(9));
+                    temp_end = time(NULL);
+                    player_1_time += difftime(temp_end, temp_begin);
+                }
+                else if (turn == 2)
+                {
+                    temp_begin = time(NULL);
+                    strcpy(input,scan_string(9));
+                    temp_end = time(NULL);
+                    player_2_time += difftime(temp_end, temp_begin);
+                }
                 if(input[0]=='r' || input[0]=='R' && strlen(input) == 1)
                 {
                     redo();
+                    printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
+                    printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n" ANSI_RESET_ALL, player_2_time);
                     print_grid();
                     temp = number_of_closed_boxes();
                     continue;
@@ -141,6 +190,8 @@ void game_flow(void)
                 else if(input[0]=='U' || input[0]=='u' && strlen(input) == 1)
                 {
                     undo();
+                    printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
+                    printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n" ANSI_RESET_ALL, player_2_time);
                     print_grid();
                     temp = number_of_closed_boxes();
                     continue;
@@ -157,11 +208,27 @@ void game_flow(void)
         {
             printf(ANSI_COLOR_BLUE "Player %d : %s's Turn : " ANSI_RESET_ALL, turn, player_2_name);
         }
-        if(mode == 1 || mode == 2 && turn == 1 ){
-        values = scan_validity();
-        values = check_if_line_exist(values);
-        fill_data_into_matrices(values);
-        h_v = vertical_or_horizontal(values);
+        if(mode == 1 || mode == 2 && turn == 1 )
+        {
+            if(turn == 1)
+            {
+                temp_begin = time(NULL);
+                values = scan_validity();
+                temp_end = time(NULL);
+                player_1_time += difftime(temp_end, temp_begin);
+            }
+            else if(turn == 2)
+            {
+                temp_begin = time(NULL);
+                values = scan_validity();
+                temp_end = time(NULL);
+                player_2_time += difftime(temp_end, temp_begin);
+            }
+            
+            values = check_if_line_exist(values);
+            fill_data_into_matrices(values);
+            h_v = vertical_or_horizontal(values);
+        
         }
         else // mode = 2 computer play
         {
@@ -170,6 +237,8 @@ void game_flow(void)
         }
         check_boxes();
         printf("\n");
+        printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
+        printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n" ANSI_RESET_ALL, player_2_time);
         print_grid();
         printf("\n");
         // redo 
