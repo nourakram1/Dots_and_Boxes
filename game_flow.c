@@ -11,8 +11,8 @@ void menu (void)
     printf("\n\n");
     do{
         printf(ANSI_COLOR_MAGENTA "Enter\n");
-        printf("N: For New Game\nL: For Load Game\nR: For Players Rank\nE: For Exit\n" ANSI_RESET_ALL);
-        printf("Input: ");
+        printf("N: For New Game\nL: For Load Game\nR: For Players Rank\nE: For Exit\n");
+        printf("Input: "ANSI_RESET_ALL);
         strcpy(input,scan_string(9)); 
         if(input[0] >= 65 && input[0] <= 90)
         {
@@ -40,7 +40,7 @@ void menu (void)
         char c;
         do
         {
-            printf("Enter Game Size From 2 x 2 Till 9 x 9 In This Form (Row x Columbs)\n");
+            printf(ANSI_COLOR_MAGENTA"Enter Game Size From 2 x 2 Till 9 x 9 In This Form (Row x Columbs)\n"ANSI_RESET_ALL);
             strcpy(input,scan_string(9));
             game_height = input[0]-48;
             game_width = input[4]-48;
@@ -50,27 +50,26 @@ void menu (void)
         }while(strlen(input) > 5 || game_height < 2 || game_height > 9 || game_width < 2 || game_width > 9 || c!='x' || input[1]!=' ' || input[3]!=' ');
         do
         {
-            printf("Enter 1 : For 1 VS 1\nEnter 2 : For Computer Mode\n");
-            printf("Input: ");
+            printf(ANSI_COLOR_MAGENTA"Enter 1 : For 1 VS 1\nEnter 2 : For Computer Mode\n");
+            printf("Input: "ANSI_RESET_ALL);
             strcpy(input,scan_string(9));
             mode = input [0]-48;
 
         }while (mode != 1 && mode != 2 || strlen(input)!=1);
         if(mode == 1)
         {
-            printf("Enter Player 1 Name : ");
+            printf(ANSI_COLOR_RED"Enter Player 1 Name : "ANSI_RESET_ALL);
             strcpy(player_1_name,scan_string(30));
-            printf("Enter Player 2 Name : ");
+            printf(ANSI_COLOR_BLUE"Enter Player 2 Name : "ANSI_RESET_ALL);
             strcpy(player_2_name,scan_string(30));
         }
         else
         {
-            printf("Enter Player 1 Name : " ANSI_RESET_ALL);
+            printf(ANSI_COLOR_RED"Enter Player 1 Name : " ANSI_RESET_ALL);
             strcpy(player_1_name,scan_string(30));
             strcpy(player_2_name,"Computer");
 
         }
-        printf(ANSI_RESET_ALL);
         game_flow();
         
     }
@@ -151,9 +150,11 @@ void game_flow(void)
         printf("\n");
         count_player_moves(&player_1_moves,&player_2_moves,&remaining_edges);
         char nubmer_of_closed_boxes = number_of_closed_boxes();
-        printf("%s's Score: %d \t%s's Score: %d\t", player_1_name, n_player1, player_2_name, n_player2);
-        printf("%s's Moves: %d \t%s's Moves: %d\t", player_1_name, player_1_moves, player_2_name, player_2_moves);
-        printf("Remaining Edges : %d\n",remaining_edges);
+        printf(ANSI_COLOR_RED"%s's Score: %d \t"ANSI_RESET_ALL, player_1_name, n_player1);
+        printf(ANSI_COLOR_BLUE"%s's Score: %d \t"ANSI_RESET_ALL, player_2_name, n_player2);
+        printf(ANSI_COLOR_RED"%s's Moves: %d \t"ANSI_RESET_ALL, player_1_name, player_1_moves);
+        printf(ANSI_COLOR_BLUE"%s's Moves: %d \t"ANSI_RESET_ALL, player_2_name, player_2_moves);
+        printf(ANSI_COLOR_MAGENTA"Remaining Edges : %d\n"ANSI_RESET_ALL,remaining_edges);
         if(temp == nubmer_of_closed_boxes)
         {
             if(turn == 1)
