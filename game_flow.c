@@ -12,15 +12,19 @@ void menu (void)
     printf("\n\n");
     do{
         printf(ANSI_COLOR_MAGENTA "Enter\n");
-        printf("N: For New Game\nR: For Load Game\nP: For Players Rank\nE: For Exit\n" ANSI_RESET_ALL);
+        printf("N: For New Game\nL: For Load Game\nR: For Players Rank\nE: For Exit\n" ANSI_RESET_ALL);
         printf("Input: ");
         scanf("%s", input);
         if(input[0] >= 65 && input[0] <= 90)
         {
             input[0] = input[0] - 65 + 97;
         }
+<<<<<<< Updated upstream
         while(getchar()!='\n');
     }while (input[0] != 'r' && input[0] != 'e' && input[0] != 'n' && input[0] != 'p' || strlen(input) != 1);
+=======
+    }while (input[0] != 'l' && input[0] != 'e' && input[0] != 'n' && input[0] != 'r' || strlen(input) != 1);
+>>>>>>> Stashed changes
 
 
     if(input[0] == 'e' || input[0] == 'E')
@@ -79,8 +83,11 @@ void menu (void)
         game_flow();
         
     }
-    else{// input[0]}
+    else if (input[0] == 'l' || input[0] == 'L')
+    {
+        load_game();
     }
+    
 }
 
 void game_flow(void)
@@ -91,6 +98,69 @@ void game_flow(void)
     printf("\n\n");
     while(number_of_closed_boxes() != game_height * game_width)
     {
+<<<<<<< Updated upstream
+=======
+        char input [5];
+        if (mode == 1 || mode == 2 && turn == 1)
+        {
+            save_exit();
+            if(undo_stack != NULL && redo_stack == NULL)
+            {
+                printf("Enter U For undo, else for continue : ");
+                strcpy(input,scan_string(2));
+                if(input[0] >= 65 && input[0] <= 90)
+                {
+                    input[0] = input[0] - 65 + 97;
+                }
+                if(input[0]=='u' || input[0]=='U')
+                {
+                    undo();
+                    print_grid();
+                    temp = number_of_closed_boxes();
+                    continue;
+                }
+
+            }
+            else if (undo_stack == NULL && redo_stack != NULL)
+            {
+                printf("Enter R For REDO, Else For Continue : ");
+                strcpy(input,scan_string(2));
+                if(input[0] >= 65 && input[0] <= 90)
+                {
+                    input[0] = input[0] - 65 + 97;
+                }
+                if(input[0]=='r' || input[0]=='R')
+                {
+                    redo();
+                    print_grid();
+                    temp = number_of_closed_boxes();
+                    continue;
+                }
+
+            }
+            else if(undo_stack != NULL && redo_stack != NULL)
+            {
+                printf("Enter U For Undo,Enter R For REDO, Else For Continue : ");
+                strcpy(input,scan_string(2));
+                if(input[0]=='r' || input[0]=='R')
+                {
+                    redo();
+                    print_grid();
+                    temp = number_of_closed_boxes();
+                    continue;
+                }
+                else if(input[0]=='U' || input[0]=='u')
+                {
+                    undo();
+                    print_grid();
+                    temp = number_of_closed_boxes();
+                    continue;
+                }
+            }
+        }    
+
+
+>>>>>>> Stashed changes
         if(turn == 1)
         {
             printf(ANSI_COLOR_RED "Player %d : %s's Turn : " ANSI_RESET_ALL , turn, player_1_name);

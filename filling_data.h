@@ -24,5 +24,10 @@ void count_box_edges (void);
 void zero_edges (void);
 char is_chain (char i, char j);
 void computer_play();
+<<<<<<< Updated upstream
+=======
+void save_exit(void);
+void load_game (void);
+>>>>>>> Stashed changes
 
 #endif
