@@ -79,45 +79,36 @@ void print_matrices(void)
 
 char * scan_validity (void)
 {
-   char input [10];
-    scanf("%5s",input);
-    if(strlen(input) > 4 )
-    {
-        return scan_validity();
-    }
+    char input [11];
+    strcpy(input,scan_string(10));
     input [0] -= 48;
     input [1] -= 48;
     input [2] -= 48;
     input [3] -= 48;
 
-    if ( input [0] ==input [1] & input [0] ==0  | input[2] ==input[3] & input[2] ==0 )
+    if ( input [0] ==input [1] & input [0] ==0  || input[2] ==input[3] && input[2] == 0 || strlen(input)!=4)
     {
-        while (getchar() != '\n');
-        printf(ANSI_COLOR_YELLOW"Wrong Input\n");
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity();
     }
     else if (!( (input [0] ==input [1]) ^ (input[2] ==input[3]) ))
     {
-        while (getchar() != '\n');
-        printf("Wrong Input\n");
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity();
     }
     else if ((input [0]  > game_height+1) ||(input [1] > game_height + 1) ||(input[2]  > game_width + 1)||(input[3] > game_width + 1) )
     {
-        while (getchar() != '\n');
-        printf("Wrong Input\n");
-       return scan_validity(); 
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
+        return scan_validity(); 
     }
     else if ((input [0] ==input [1] & abs(input[2] -input[3])!=1) || (input[2] ==input[3]  & abs(input [0] -input [1])!=1))
     {
-        while (getchar() != '\n');
-        printf("Wrong Input\n"ANSI_RESET_ALL);
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity(); 
     }
     
     else
     {
-        while (getchar() != '\n');
         char *s = malloc(4 * sizeof(char));
         s[0]=input [0] -1;
         s[1]=input [1]-1;

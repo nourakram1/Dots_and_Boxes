@@ -1,7 +1,6 @@
 #include "filling_data.h"
 #include "data.h"
 
-// add game edges // improved reset
 
 play * undo_stack = NULL;
 play * redo_stack = NULL;

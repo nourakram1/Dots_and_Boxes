@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<time.h>
+#include <time.h>
 
 #define ANSI_RESET_ALL          "\x1b[0m"
 
@@ -72,7 +72,6 @@ char game_width;
 char vertical_line[max_game_height][max__game_width];
 char horizontal_line[max_game_height][max__game_width];
 char box [max_game_height][max__game_width];
-char box_edges [max_game_height][max__game_width];
 char n_player1;
 char n_player2;
 char player_1_name[30];
@@ -80,7 +79,6 @@ char player_2_name[30];
 char turn;
 char temp;
 char mode;
-}game_data;
-extern game_data *ptr_game_data;
+} game_data;
 
 #endif

@@ -87,59 +87,63 @@ void game_flow(void)
     while(number_of_closed_boxes() != game_height * game_width)
     {
         char input [5];
-        if(undo_stack != NULL && redo_stack == NULL)
+        if (mode == 1 || mode == 2 && turn == 1)
         {
-            printf("Enter U For undo, else for continue : ");
-            strcpy(input,scan_string(2));
-            if(input[0] >= 65 && input[0] <= 90)
+            //save_exit();
+            if(undo_stack != NULL && redo_stack == NULL)
             {
-                input[0] = input[0] - 65 + 97;
-            }
-            if(input[0]=='u' || input[0]=='U')
-            {
-                undo();
-                print_grid();
-                temp = number_of_closed_boxes();
-                continue;
-            }
+                printf("Enter U For undo, else for continue : ");
+                strcpy(input,scan_string(2));
+                if(input[0] >= 65 && input[0] <= 90)
+                {
+                    input[0] = input[0] - 65 + 97;
+                }
+                if(input[0]=='u' || input[0]=='U')
+                {
+                    undo();
+                    print_grid();
+                    temp = number_of_closed_boxes();
+                    continue;
+                }
 
-        }
-        else if (undo_stack == NULL && redo_stack != NULL)
-        {
-            printf("Enter R For REDO, Else For Continue : ");
-            strcpy(input,scan_string(2));
-            if(input[0] >= 65 && input[0] <= 90)
-            {
-                input[0] = input[0] - 65 + 97;
             }
-            if(input[0]=='r' || input[0]=='R')
+            else if (undo_stack == NULL && redo_stack != NULL)
             {
-                redo();
-                print_grid();
-                temp = number_of_closed_boxes();
-                continue;
-            }
+                printf("Enter R For REDO, Else For Continue : ");
+                strcpy(input,scan_string(2));
+                if(input[0] >= 65 && input[0] <= 90)
+                {
+                    input[0] = input[0] - 65 + 97;
+                }
+                if(input[0]=='r' || input[0]=='R')
+                {
+                    redo();
+                    print_grid();
+                    temp = number_of_closed_boxes();
+                    continue;
+                }
 
-        }
-        else if(undo_stack != NULL && redo_stack != NULL)
-        {
-            printf("Enter U For Undo,Enter R For REDO, Else For Continue : ");
-            strcpy(input,scan_string(2));
-            if(input[0]=='r' || input[0]=='R')
-            {
-                redo();
-                print_grid();
-                temp = number_of_closed_boxes();
-                continue;
             }
-            else if(input[0]=='U' || input[0]=='u')
+            else if(undo_stack != NULL && redo_stack != NULL)
             {
-                undo();
-                print_grid();
-                temp = number_of_closed_boxes();
-                continue;
+                printf("Enter U For Undo,Enter R For REDO, Else For Continue : ");
+                strcpy(input,scan_string(2));
+                if(input[0]=='r' || input[0]=='R')
+                {
+                    redo();
+                    print_grid();
+                    temp = number_of_closed_boxes();
+                    continue;
+                }
+                else if(input[0]=='U' || input[0]=='u')
+                {
+                    undo();
+                    print_grid();
+                    temp = number_of_closed_boxes();
+                    continue;
+                }
             }
-        }
+        }    
 
 
         if(turn == 1)
@@ -217,26 +221,8 @@ void reset (void)
         for(int j = 0; j < max__game_width; j++)
         {
             horizontal_line[i][j]=0;
-        }
-    }
-    for(int i = 0; i < max_game_height ;i++)
-    {
-        for(int j = 0; j < max__game_width; j++)
-        {
             vertical_line[i][j]=0;
-        }
-    }
-    for(int i = 0; i < max_game_height ;i++)
-    {
-        for(int j = 0; j < max__game_width; j++)
-        {
             box[i][j]=0;
-        }
-    }
-    for(int i = 0; i < max_game_height ;i++)
-    {
-        for(int j = 0; j < max__game_width; j++)
-        {
             box_edges[i][j]=0;
         }
     }
