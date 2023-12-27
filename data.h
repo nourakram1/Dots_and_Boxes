@@ -66,6 +66,10 @@ extern char i_1,j_1;
 extern char h_v;
 
 
+extern time_t player_2_time;
+extern time_t player_1_time;
+extern time_t temp_begin;
+extern time_t temp_end;
 typedef struct{
 char game_height;
 char game_width;
