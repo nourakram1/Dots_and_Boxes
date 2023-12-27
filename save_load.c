@@ -1,5 +1,5 @@
 #include "data.h"
-#include"filling_data.h"
+#include "filling_data.h"
 
 void save (game_data* game_data_ptr)
 {
@@ -47,8 +47,8 @@ void load (game_data *game_data_ptr)
 void save_exit(void)
 {
     printf("Enter S For Save, E for Exit,Else For Continue : ");
-    char input [15] = "nn";
-    strcpy(input,scan_string(2));
+    char input [10] = "nn";
+    strcpy(input,scan_string(5));
     if(input[0] >= 65 && input[0] <= 90)
     {
         input[0] = input[0] - 65 + 97;

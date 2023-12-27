@@ -7,14 +7,14 @@
 // no of edges for each box
 void menu (void)
 {
-    char input[15];
+    char input[10];
     printf(ANSI_COLOR_MAGENTA ANSI_BACKGROUND_CYAN ANSI_STYLE_BOLD "\n \n \n \t \t \t \t \t \t Dots And Boxes\n\n" ANSI_RESET_ALL);
     printf("\n\n");
     do{
         printf(ANSI_COLOR_MAGENTA "Enter\n");
         printf("N: For New Game\nL: For Load Game\nR: For Players Rank\nE: For Exit\n" ANSI_RESET_ALL);
         printf("Input: ");
-        strcpy(input,scan_string(2)); 
+        strcpy(input,scan_string(9)); 
         if(input[0] >= 65 && input[0] <= 90)
         {
             input[0] = input[0] - 65 + 97;
@@ -42,7 +42,7 @@ void menu (void)
         do
         {
             printf("Enter Game Size From 2 x 2 Till 9 x 9 In This Form (Row x Columbs)\n");
-            strcpy(input,scan_string(6));
+            strcpy(input,scan_string(9));
             game_height = input[0]-48;
             game_width = input[4]-48;
             c = input[2];
@@ -53,7 +53,7 @@ void menu (void)
         {
             printf("Enter 1 : For 1 VS 1\nEnter 2 : For Computer Mode\n");
             printf("Input: ");
-            strcpy(input,scan_string(2));
+            strcpy(input,scan_string(9));
             mode = input [0]-48;
 
         }while (mode != 1 && mode != 2 || strlen(input)!=1);
@@ -89,19 +89,19 @@ void game_flow(void)
     printf("\n\n");
     while(number_of_closed_boxes() != game_height * game_width)
     {
-        char input [15];
+        char input [10];
         if (mode == 1 || mode == 2 && turn == 1)
         {
             save_exit();
             if(undo_stack != NULL && redo_stack == NULL)
             {
                 printf("Enter U For undo, else for continue : ");
-                strcpy(input,scan_string(2));
+                strcpy(input,scan_string(9));
                 if(input[0] >= 65 && input[0] <= 90)
                 {
                     input[0] = input[0] - 65 + 97;
                 }
-                if(input[0]=='u' || input[0]=='U')
+                if(input[0]=='u' || input[0]=='U' && strlen(input) == 1)
                 {
                     undo();
                     print_grid();
@@ -113,12 +113,12 @@ void game_flow(void)
             else if (undo_stack == NULL && redo_stack != NULL)
             {
                 printf("Enter R For REDO, Else For Continue : ");
-                strcpy(input,scan_string(2));
+                strcpy(input,scan_string(9));
                 if(input[0] >= 65 && input[0] <= 90)
                 {
                     input[0] = input[0] - 65 + 97;
                 }
-                if(input[0]=='r' || input[0]=='R')
+                if(input[0]=='r' || input[0]=='R' && strlen(input) == 1)
                 {
                     redo();
                     print_grid();
@@ -130,15 +130,15 @@ void game_flow(void)
             else if(undo_stack != NULL && redo_stack != NULL)
             {
                 printf("Enter U For Undo,Enter R For REDO, Else For Continue : ");
-                strcpy(input,scan_string(2));
-                if(input[0]=='r' || input[0]=='R')
+                strcpy(input,scan_string(9));
+                if(input[0]=='r' || input[0]=='R' && strlen(input) == 1)
                 {
                     redo();
                     print_grid();
                     temp = number_of_closed_boxes();
                     continue;
                 }
-                else if(input[0]=='U' || input[0]=='u')
+                else if(input[0]=='U' || input[0]=='u' && strlen(input) == 1)
                 {
                     undo();
                     print_grid();
