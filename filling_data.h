@@ -29,5 +29,6 @@ void save_exit(char input);
 void load_game (void);
 void print_grid(void);
 void undo_redo (char input);
+void count_player_moves(char *player_1, char *player_2,char * remaining);
 
 #endif

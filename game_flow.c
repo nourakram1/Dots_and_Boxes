@@ -83,6 +83,7 @@ void menu (void)
 void game_flow(void)
 {
     char * values;
+    char player_1_moves,player_2_moves,remaining_edges;
     printf("\n\n");
     printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
     printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n\n" ANSI_RESET_ALL, player_2_time);
@@ -148,9 +149,11 @@ void game_flow(void)
         printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n\n\n" ANSI_RESET_ALL, player_2_time);
         print_grid();
         printf("\n");
-        // redo 
+        count_player_moves(&player_1_moves,&player_2_moves,&remaining_edges);
         char nubmer_of_closed_boxes = number_of_closed_boxes();
-        printf("%s's Score: %d \n%s's Score: %d\n", player_1_name, n_player1, player_2_name, n_player2);
+        printf("%s's Score: %d \t%s's Score: %d\t", player_1_name, n_player1, player_2_name, n_player2);
+        printf("%s's Moves: %d \t%s's Moves: %d\t", player_1_name, player_1_moves, player_2_name, player_2_moves);
+        printf("Remaining Edges : %d\n",remaining_edges);
         if(temp == nubmer_of_closed_boxes)
         {
             if(turn == 1)
@@ -291,4 +294,49 @@ void count_box_edges (void)
         }
     }    
     
+}
+void count_player_moves(char *player_1, char *player_2,char * remaining)
+{
+    *player_1 = 0;
+    *player_2 = 0;
+    *remaining = 0;
+    for (int i = 0; i <= game_height ; i++)
+    {
+        for (int j = 0; j < game_width; j++)
+        {
+            if(horizontal_line[i][j] == 1)
+            {
+                (*player_1)++;
+            }
+            else if (horizontal_line[i][j] == 2)
+            {
+                (*player_2)++;
+            }
+            else
+            {
+                (*remaining)++;
+            }
+
+        }
+    }
+    for (int i = 0; i < game_height ; i++)
+    {
+        for (int j = 0; j <= game_width; j++)
+        {
+             if(vertical_line[i][j] == 1)
+            {
+                (*player_1)++;
+            }
+            else if (vertical_line[i][j] == 2)
+            {
+                (*player_2)++;
+            }
+            else
+            {
+                (*remaining)++;
+            }
+
+        }
+    }         
+
 }
