@@ -65,18 +65,24 @@ void save_exit(void)
         game_data save_1;
         save(&save_1);
         FILE * out;
-        out = fopen("save_1.bin","wb");
+        char file_dir[100]= "/Users/ahmedehab/GIT_REPO/Dots_and_Boxes/saved_games/\"";
+        char file_name[31];
+        printf("Enter File Name To Create It Without Extention : ");
+        strcpy(file_name,scan_string(30));
+        strcat(file_dir,file_name);
+        strcat(file_dir,".bin\"");
+        out = fopen(file_dir,"wb");
         if (out == NULL)
         {
             printf("Save Failed\n");
-            exit(EXIT_FAILURE);
+            return;
         }
         int written = fwrite(&save_1, sizeof(game_data), 1, out);
         fclose(out);
         if(written == 0)
         {
             printf("Save Failed\n");
-            exit(EXIT_FAILURE);
+            return;
         }
         else
         {
@@ -94,18 +100,24 @@ void load_game (void)
 {
     game_data save_1;
     FILE * in;
-    in = fopen("save_1.bin","rb");
+    char file_dir[100]= "/Users/ahmedehab/GIT_REPO/Dots_and_Boxes/saved_games/\"";
+    char file_name[31];
+    printf("Enter File Name To load Without Extention : ");
+    strcpy(file_name,scan_string(30));
+    strcat(file_dir,file_name);
+    strcat(file_dir,".bin\"");
+    in = fopen(file_dir,"rb");
     if(in == NULL)
     {
         printf("Load Failed");
-        exit(EXIT_FAILURE);
+        return;
     }
     int read = fread(&save_1,sizeof(game_data),1,in);
     fclose(in);
     if(read == 0)
     {
         printf("Load Failed");
-        exit(EXIT_FAILURE);  
+       return;  
     }
     load(&save_1);
     printf("load done \n\n\n");
