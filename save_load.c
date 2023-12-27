@@ -44,23 +44,16 @@ void load (game_data *game_data_ptr)
         }
     }  
 }
-void save_exit(void)
+void save_exit(char input)
 {
-    printf("Enter S For Save, E for Exit,Else For Continue : ");
-    char input [10] = "nn";
-    strcpy(input,scan_string(5));
-    if(input[0] >= 65 && input[0] <= 90)
-    {
-        input[0] = input[0] - 65 + 97;
-    }
-    if(input[0] == 'e' || input [0] =='E' && strlen(input)== 1)
+    if(input == 'e')
     {
         free_redo_stack();
         free_undo_stack();
         printf(ANSI_COLOR_MAGENTA "game closed succesfully !\n" ANSI_RESET_ALL);
         exit(EXIT_SUCCESS);
     }
-    else if (input[0] == 's' || input[0] == 'S' && strlen(input)== 1)
+    else if (input == 's')
     {
         game_data save_1;
         save(&save_1);
@@ -122,4 +115,49 @@ void load_game (void)
     load(&save_1);
     printf("load done \n\n\n");
     game_flow();
+}
+void undo_redo (char input)
+{
+    if(undo_stack != NULL && redo_stack == NULL)
+    {
+        if(input =='u')
+        {
+            undo();
+            print_grid();
+            temp = number_of_closed_boxes();
+        }
+
+    }
+    else if (undo_stack == NULL && redo_stack != NULL)
+    {
+
+        if( input=='r')
+        {
+            redo();
+            print_grid();
+            temp = number_of_closed_boxes();
+            
+        }
+
+    }
+    else if(undo_stack != NULL && redo_stack != NULL)
+    {
+        if(input == 'r')
+        {
+            redo();
+            print_grid();
+            temp = number_of_closed_boxes();
+        }
+        else if(input=='u')
+        {
+            undo();
+            print_grid();
+            temp = number_of_closed_boxes();
+        }
+    }
+    else
+    {
+        printf("No Moves\n");
+    }
+
 }

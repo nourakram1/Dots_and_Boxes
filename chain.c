@@ -79,8 +79,24 @@ void print_matrices(void)
 
 char * scan_validity (void)
 {
-    char input [15];
-    strcpy(input,scan_string(6));
+    printf("Play or Enter E for Exit,R For Redo,U For Undo,S For Save : ");
+    char *input = malloc(10 * sizeof(char));
+    strcpy(input,scan_string(9));
+    if(input[0] >= 65 && input[0] <= 90)
+    {
+        input[0] = input[0] - 65 + 97;
+    }
+    if(input [0] == 'e' || input [0] == 's' && strlen(input) == 1 )
+    {
+        return input;
+    }
+
+    if(input [0] == 'r' || input [0] == 'u' && strlen(input) == 1 )
+    {
+        return input;
+    }
+
+
     input [0] -= 48;
     input [1] -= 48;
     input [2] -= 48;

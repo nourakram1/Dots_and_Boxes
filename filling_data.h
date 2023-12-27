@@ -25,8 +25,9 @@ void count_box_edges (void);
 void zero_edges (void);
 char is_chain (char i, char j);
 void computer_play();
-void save_exit(void);
-void save_exit(void);
+void save_exit(char input);
 void load_game (void);
+void print_grid(void);
+void undo_redo (char input);
 
 #endif
