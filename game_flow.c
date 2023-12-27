@@ -117,9 +117,6 @@ void game_flow(void)
             }
             if(values[0]=='e' || values[0] =='s' && strlen(values)==1)
             {
-                printf("\n");
-                printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
-                printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n\n\n" ANSI_RESET_ALL, player_2_time);
                 save_exit(values[0]);
                 continue;
 
