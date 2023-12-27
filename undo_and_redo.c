@@ -1,7 +1,7 @@
 #include "data.h"
 play * undo_temp = NULL;
 play * redo_temp = NULL;
-void free_stack(play * stack) // ..
+void free_undo_stack() // ..
 {
     if(undo_stack != NULL)
     {
@@ -15,33 +15,47 @@ void free_stack(play * stack) // ..
     }
 }// at the end the value of stack = NULL
 
-play * create_play_node(char i_1,char j_1, char is_closed, char l_r, char is_chain)
+void free_redo_stack() // ..
+{
+    if(redo_stack != NULL)
+    {
+        play *temp;
+        while(redo_stack != NULL)
+        {
+            temp = redo_stack->next;
+            free(redo_stack);
+            redo_stack = temp;
+        }
+    }
+}// at the end the value of stack = NULL
+
+play * create_play_node(char i_1,char j_1,char box_i, char box_j, char is_chain, char h_v_)
 {
     play * new = malloc(1 * sizeof(play)); // creeating a node in the heep
-    new->h_v = h_v;
+    new->h_v = h_v_;
     new->i_1 = i_1;
     new->j_1 = j_1;
-    new->is_closed = is_closed;
-    new->l_r = l_r;
+    new->box_i = box_i;
+    new->box_j = box_j;
     new->is_chain = is_chain;
     new->turn = turn;
     return new;
 }
 
-void push_move(char i_1, char j_1, char is_closed, char l_r, char is_chain)//true
+void push_move(char i_1, char j_1, char box_i, char box_j, char is_chain, char h_v_)//true
 {
     if(redo_stack != NULL) // freeing the redo if it is not empty
     {
-        free_stack(redo_stack);
+        free_redo_stack();
     }
 
-    play *new = create_play_node(i_1,j_1,is_closed, l_r, is_chain); //initializing a node
+    play *new = create_play_node(i_1,j_1,box_i, box_j, is_chain, h_v_); //initializing a node
 
     if(undo_stack != NULL)
     {
         if(undo_stack->turn != turn) // freeing the undo stack if the turn has changed
         {
-            free_stack(undo_stack);
+            free_undo_stack();
         }
     }
 
@@ -55,7 +69,7 @@ void print_stack(play * stack) // true
     while(temp != NULL)
     {
         printf("node[%i] : ", i);
-        printf("h_v = %i, i_1 = %i, is_chain = %i, is_closed = %i, j_1 = %i, l_r = %i, turn = %i\n", temp->h_v, temp->i_1, temp->is_chain, temp->is_closed, temp->j_1, temp->l_r, temp->turn);
+        printf("h_v = %i, i_1 = %i, is_chain = %i, box_i = %i, j_1 = %i, box_j = %i, turn = %i\n", temp->h_v, temp->i_1, temp->is_chain, temp->box_i, temp->j_1, temp->box_j, temp->turn);
         printf("\n");
         temp = temp->next;
         i++;
@@ -82,27 +96,24 @@ void undo(void) //..
         {
             vertical_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
         }
-        if(undo_stack->is_closed == 1)
-        {
-            if (undo_stack->h_v == 1 && undo_stack->l_r == 2) // under horizontal line
-            {
-                box[(int)undo_stack->i_1 +1 ][(int)undo_stack->j_1] = 0;
-
-            }
-            else if ((undo_stack->h_v == 1 && undo_stack->l_r == 1) || (undo_stack->h_v == 2 && undo_stack->l_r == 1)) // above
-            {
-                    box[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
-
-            }
-            else
-            {
-                    box[(int)undo_stack->i_1][(int)undo_stack->j_1 + 1] = 0;
-            }
-        }
+        box[undo_stack->box_i][undo_stack->box_j] = 0;
     }
 
     if(undo_stack->is_chain == 0)
     {
+        if(undo_stack != NULL)
+        {
+            if(undo_stack->h_v == 1)
+            {
+                horizontal_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
+            }
+            else
+            {
+                vertical_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
+            }
+            box[undo_stack->box_i][undo_stack->box_j] = 0;
+        }
+
         redo_temp = redo_stack; //redo [^redo_stack and ^redo_temp, ____,  ....] e.i redo temp points at the first node in redo stack
         redo_stack = undo_stack; // makes the redo_stack pointer points at the first node in the undo stack
         undo_temp = undo_stack->next; // making a temp pointer point at the second node of the undo stack (to not to lose the rest of undo_stack)
@@ -113,6 +124,19 @@ void undo(void) //..
     {
         while(undo_stack->is_chain == 1)
         {
+            if(undo_stack != NULL)
+            {
+                if(undo_stack->h_v == 1)
+                {
+                    horizontal_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
+                }
+                else
+                {
+                    vertical_line[(int)undo_stack->i_1][(int)undo_stack->j_1] = 0;
+                }
+                box[undo_stack->box_i][undo_stack->box_j] = 0;
+            }
+            
             redo_temp = redo_stack; //redo [^redo_stack and ^redo_temp, ____,  ....] e.i redo temp points at the first node in redo stack
             redo_stack = undo_stack; // makes the redo_stack pointer points at the first node in the undo stack
             undo_temp = undo_stack->next; // making a temp pointer point at the second node of the undo stack (to not to lose the rest of undo_stack)
@@ -134,37 +158,23 @@ void redo(void) //..
         return ;
     }
 
-    if(redo_stack != NULL)
+    if(redo_stack->is_chain == 0)
     {
-        if(redo_stack->h_v == 1)
+        if(redo_stack != NULL)
         {
-            horizontal_line[(int)redo_stack->i_1][(int)redo_stack->j_1] = redo_stack->turn;
-        }
-        else
-        {
-            vertical_line[(int)redo_stack->i_1][(int)redo_stack->j_1] = redo_stack->turn;
-        }
-        if(redo_stack->is_closed == 1)
-        {
-            if (redo_stack->h_v == 1 && redo_stack->l_r == 2) // under horizontal line
+            if(redo_stack->h_v == 1)
             {
-                box[(int)redo_stack->i_1 +1 ][(int)redo_stack->j_1] = redo_stack->turn;
-
-            }
-            else if ((redo_stack->h_v == 1 && redo_stack->l_r == 1) || (redo_stack->h_v == 2 && redo_stack->l_r == 1)) // above
-            {
-                    box[(int)redo_stack->i_1][(int)redo_stack->j_1] = redo_stack->turn;
-
+                horizontal_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
             }
             else
             {
-                    box[(int)redo_stack->i_1][(int)redo_stack->j_1 + 1] = redo_stack->turn;
+                vertical_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
             }
+            box[redo_stack->box_i][redo_stack->box_j] = redo_stack->turn;
         }
-    }
+        
 
-    if(redo_stack->is_chain == 0)
-    {
+
         undo_temp = undo_stack; //redo [^redo_stack and ^redo_temp, ____,  ....] e.i redo temp points at the first node in redo stack
         undo_stack = redo_stack; // makes the redo_stack pointer points at the first node in the undo stack
         redo_temp = redo_stack->next; // making a temp pointer point at the second node of the undo stack (to not to lose the rest of undo_stack)
@@ -175,6 +185,19 @@ void redo(void) //..
     {
         while(redo_stack->is_chain == 1)
         {
+            if(redo_stack != NULL)
+            {
+                if(redo_stack->h_v == 1)
+                {
+                    horizontal_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
+                }
+                else
+                {
+                    vertical_line[redo_stack->i_1][redo_stack->j_1] = redo_stack->turn;
+                }
+                box[redo_stack->box_i][redo_stack->box_j] = redo_stack->turn;
+            }
+            
             undo_temp = undo_stack; //redo [^redo_stack and ^redo_temp, ____,  ....] e.i redo temp points at the first node in redo stack
             undo_stack = redo_stack; // makes the redo_stack pointer points at the first node in the undo stack
             redo_temp = redo_stack->next; // making a temp pointer point at the second node of the undo stack (to not to lose the rest of undo_stack)

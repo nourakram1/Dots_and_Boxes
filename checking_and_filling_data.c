@@ -79,45 +79,36 @@ void print_matrices(void)
 
 char * scan_validity (void)
 {
-    char input [5];
-    scanf("%4s",input);
-    if(strlen(input) > 4 )
-    {
-        return scan_validity();
-    }
+    char input [15];
+    strcpy(input,scan_string(6));
     input [0] -= 48;
     input [1] -= 48;
     input [2] -= 48;
     input [3] -= 48;
 
-    if ( input [0] ==input [1] & input [0] ==0  | input[2] ==input[3] & input[2] ==0 )
+    if ( input [0] ==input [1] & input [0] ==0  || input[2] ==input[3] && input[2] == 0 || strlen(input)!=4)
     {
-        while (getchar() != '\n');
-        printf(ANSI_COLOR_YELLOW"Wrong Input\n");
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity();
     }
     else if (!( (input [0] ==input [1]) ^ (input[2] ==input[3]) ))
     {
-        while (getchar() != '\n');
-        printf("Wrong Input\n");
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity();
     }
     else if ((input [0]  > game_height+1) ||(input [1] > game_height + 1) ||(input[2]  > game_width + 1)||(input[3] > game_width + 1) )
     {
-        while (getchar() != '\n');
-        printf("Wrong Input\n");
-       return scan_validity(); 
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
+        return scan_validity(); 
     }
     else if ((input [0] ==input [1] & abs(input[2] -input[3])!=1) || (input[2] ==input[3]  & abs(input [0] -input [1])!=1))
     {
-        while (getchar() != '\n');
-        printf("Wrong Input\n"ANSI_RESET_ALL);
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity(); 
     }
     
     else
     {
-        while (getchar() != '\n');
         char *s = malloc(4 * sizeof(char));
         s[0]=input [0] -1;
         s[1]=input [1]-1;
@@ -191,17 +182,17 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
             if (vertical_line[i+1][j] && vertical_line[i+1][j+1] && horizontal_line[i+2][j] != 0) 
             {
                 box [i+1][j] = turn;
+                push_move(i+1,j,i+1,j,1,1);
                 return 1;
             }
             else if(vertical_line[i+1][j] && vertical_line[i+1][j+1] && horizontal_line[i+1][j] == 0)// | |
             {
                 if(turn !=0 && chain(i+1,j,1,2,turn,is_plus)) // check chain for box below me
                 {
-                    if(horizontal_line[i+2][j] == 0)
-                    {
-                        horizontal_line[i+2][j] = turn;
-                    }
+            
+                    horizontal_line[i+2][j] = turn;
                     box [i+1][j] = turn;
+                    push_move(i+2,j,i+1,j,1,1);
                     return 1;
                 }
                 else if(turn == 0 && (chain(i+1,j,1,2,0,is_plus) ))// mean dry searching
@@ -221,6 +212,7 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 {
                 vertical_line[i+1][j+1] = turn;
                 box[i+1][j] =turn;
+                push_move(i+1,j+1,i+1,j,1,2);
                 return 1; 
                 }
                 else if(turn == 0 && chain(i+1,j,2,2,0,is_plus)) //dry searching
@@ -240,6 +232,7 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 {
                 vertical_line[i+1][j] = turn;
                 box[i+1][j] = turn;
+                push_move(i+1,j,i+1,j,1,2);
                 return 1;
                 }
                 else if(turn == 0 && chain(i+1,j,2,1,0,is_plus))
@@ -257,9 +250,21 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 chain(i+1,j,1,2,turn,1);
                 chain(i+1,j,2,1,turn,0);
                 chain(i+1,j,2,2,turn,0);
-                if(!vertical_line[i+1][j]){vertical_line[i+1][j]=turn;}
-                if(!vertical_line[i+1][j+1]){vertical_line[i+1][j+1]=turn;}
-                if(!horizontal_line[i+2][j]){horizontal_line[i+2][j]=turn;}
+                if(!vertical_line[i+1][j])
+                {
+                    vertical_line[i+1][j]=turn;
+                    push_move(i+1,j,i+1,j,1,2);
+                }
+                if(!vertical_line[i+1][j+1])
+                {
+                    vertical_line[i+1][j+1]=turn;
+                    push_move(i+1,j+1,i+1,j,1,2);
+                }
+                if(!horizontal_line[i+2][j])
+                {
+                    horizontal_line[i+2][j]=turn;
+                    push_move(i+2,j,i+1,j,1,1);
+                }
                 box[i+1][j]=turn;
                 return 1;
             }
@@ -289,7 +294,8 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
         {
             if (vertical_line[i-1][j] && vertical_line[i-1][j+1] && horizontal_line[i-1][j] != 0)
             {
-                box[i-1][j]=turn; // important for + sign
+                box[i-1][j]=turn;
+                push_move(i,j,i-1,j,1,1);
                 return 1;
             }
 
@@ -297,11 +303,10 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
             {
                 if(turn != 0 && chain(i-1,j,1,1,turn,is_plus))
                 {
-                    if(horizontal_line[i-1][j] == 0)
-                    {
-                        horizontal_line[i-1][j] = turn;
-                    }
+                
+                    horizontal_line[i-1][j] = turn;
                     box[i-1][j] = turn;
+                    push_move(i-1,j,i-1,j,1,1);
                     return 1;
                 }
                 else if (turn == 0 && chain(i-1,j,1,1,0,is_plus))
@@ -320,6 +325,7 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 {
                 vertical_line [i-1][j+1] = turn;
                 box[i-1][j] = turn;
+                push_move(i-1,j+1,i-1,j,1,2);
                 return 1;
                 }
                 else if (turn == 0 && chain(i-1,j,2,2,0,is_plus))
@@ -338,6 +344,7 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 {
                 vertical_line[i-1][j] = turn;
                 box[i-1][j] = turn;
+                push_move(i-1,j,i-1,j,1,2);
                 return 1;
                 }
                 else if (turn ==0 && chain(i-1,j,2,1,0,is_plus))
@@ -354,9 +361,21 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 chain(i-1,j,1,1,turn,1);
                 chain(i-1,j,2,1,turn,0);
                 chain(i-1,j,2,2,turn,0);
-                if(!vertical_line[i-1][j]){vertical_line[i-1][j]=turn;}
-                if(!vertical_line[i-1][j+1]){vertical_line[i-1][j+1]=turn;}
-                if(!horizontal_line[i-1][j]){horizontal_line[i-1][j]=turn;}
+                if(!vertical_line[i-1][j])
+                {
+                    vertical_line[i-1][j]=turn;
+                    push_move(i-1,j,i-1,j,1,2);
+                }
+                if(!vertical_line[i-1][j+1])
+                {
+                    vertical_line[i-1][j+1]=turn;
+                    push_move(i-1,j+1,i-1,j,1,2);
+                }
+                if(!horizontal_line[i-1][j])
+                {
+                    horizontal_line[i-1][j]=turn;
+                    push_move(i-1,j,i-1,j,1,1);
+                }
                 box[i-1][j]=turn;
                 return 1;
             }
@@ -392,16 +411,16 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
             if (horizontal_line[i][j+1] && horizontal_line[i+1][j+1] && vertical_line[i][j+2] != 0 )
             {
                 box[i][j+1] = turn;
+                push_move(i,j+1,i,j+1,1,2);
                 return 1;
             }
             else if (horizontal_line[i][j+1] && horizontal_line[i+1][j+1] && vertical_line[i][j+1] == 0 )
             {
                 if(turn !=0 && chain(i,j+1,2,2,turn,is_plus))
                 {
-                    if(vertical_line[i][j+2] == 0)
-                    {
-                        vertical_line[i][j+2] = turn;
-                    }
+                   
+                    vertical_line[i][j+2] = turn;
+                    push_move(i,j+2,i,j+1,1,2);
                     box[i][j+1] = turn;
                     return 1;
                 }
@@ -423,6 +442,7 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 {
                     horizontal_line[i+1][j+1] = turn;
                     box[i][j+1] = turn;
+                    push_move(i+1,j+1,i,j+1,1,1);
                     return 1;
                 }
                 else if (turn == 0 && chain(i,j+1,1,2,0,is_plus))
@@ -440,6 +460,7 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
 
                 horizontal_line[i][j+1] = turn;
                 box[i][j+1] = turn;
+                push_move(i,j+1,i,j+1,1,1);
                 return 1 ;}
                 else if (turn ==0 && chain(i,j+1,1,1,0,is_plus))
                 {
@@ -457,9 +478,21 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 chain(i,j+1,1,1,turn,0);
                 chain(i,j+1,1,2,turn,0);
                 chain(i,j+1,2,2,turn,1);
-                if(!vertical_line[i][j+2]){vertical_line[i][j+2]=turn;}
-                if(!horizontal_line[i][j+1]){horizontal_line[i][j+1]=turn;}
-                if(!horizontal_line[i+1][j+1]){horizontal_line[i+1][j+1]=turn;}
+                if(!vertical_line[i][j+2])
+                {
+                    vertical_line[i][j+2]=turn;
+                    push_move(i,j+2,i,j+1,1,2);
+                }
+                if(!horizontal_line[i][j+1])
+                {
+                    horizontal_line[i][j+1]=turn;
+                    push_move(i,j+1,i,j+1,1,1);
+                }
+                if(!horizontal_line[i+1][j+1])
+                {
+                    horizontal_line[i+1][j+1]=turn;
+                    push_move(i+1,j+1,i,j+1,1,1);
+                }
                 box[i][j+1]=turn;
                 return 1;
             }
@@ -494,17 +527,17 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
             if (horizontal_line[i][j-1] && horizontal_line[i+1][j-1] && vertical_line[i][j-1] != 0)
             {
                 box[i][j-1]=turn;
+                push_move(i,j,i,j-1,1,2);
                 return 1;
             }
             else if (horizontal_line[i][j-1] && horizontal_line[i+1][j-1] && vertical_line[i][j] == 0 )
             {
                 if( turn !=0 && chain(i,j-1,2,1,turn,is_plus))
                 {
-                    if( vertical_line[i][j-1] == 0)
-                    {
-                        vertical_line[i][j-1]= turn;
-                    }
+                
+                    vertical_line[i][j-1]= turn;
                     box[i][j-1]=turn;
+                    push_move(i,j-1,i,j-1,1,2);
                     return 1;
                 }
                 else if (turn ==0 && chain(i,j-1,2,1,0,is_plus))
@@ -522,6 +555,7 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 {
                 horizontal_line[i+1][j-1]= turn;
                 box[i][j-1]=turn;
+                push_move(i+1,j-1,i,j-1,1,1);
                 return 1;
                 }
                 else if (turn ==0 && chain(i,j-1,1,2,0,is_plus))
@@ -540,6 +574,7 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 {
                 horizontal_line[i][j-1] = turn;
                 box[i][j-1] = turn;
+                push_move(i,j-1,i,j-1,1,1);
                 return 1;
                 }
                 else if (turn ==0 && chain(i,j-1,1,2,0,is_plus))
@@ -557,9 +592,20 @@ char chain (int i, int j,char h_v,char l_r,char turn,char is_plus)
                 chain(i,j-1,1,1,turn,0);
                 chain(i,j-1,1,2,turn,0);
                 chain(i,j-1,2,1,turn,1);
-                if(!vertical_line[i][j-1]){vertical_line[i][j-1]=turn;}
-                if(!horizontal_line[i][j-1]){horizontal_line[i][j-1]=turn;}
-                if(!horizontal_line[i+1][j-1]){horizontal_line[i+1][j-1]=turn;}
+                if(!vertical_line[i][j-1])
+                {
+                    vertical_line[i][j-1]=turn;
+                    push_move(i,j-1,i,j-1,1,2);
+                }
+                if(!horizontal_line[i][j-1])
+                {
+                    horizontal_line[i][j-1]=turn;
+                    push_move(i,j-1,i,j-1,1,1);}
+                if(!horizontal_line[i+1][j-1])
+                {
+                    horizontal_line[i+1][j-1]=turn;
+                    push_move(i+1,j-1,i,j-1,1,1);
+                }
                 box[i][j-1]=turn;
                 return 1;
             }
@@ -609,11 +655,11 @@ void check_boxes (void)
                         }
                         if(i == i_1 && j == j_1)
                         {
-                            chain(i, j, h_v, 1, turn,1);
+                            push_move(i_1,j_1,i,j,chain(i, j, h_v, 1, turn,1),h_v);
                         }
                         else
                         {
-                            chain(i, j, h_v, 2, turn,1);
+                           push_move(i_1,j_1,i,j,chain(i, j, h_v, 2, turn,1),h_v);
 
                         }
                         box[i][j]=turn;

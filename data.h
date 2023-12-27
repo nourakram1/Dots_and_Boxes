@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<time.h>
+#include <time.h>
 
 #define ANSI_RESET_ALL          "\x1b[0m"
 
@@ -38,8 +38,8 @@ typedef struct play{
     char h_v;
     char i_1;
     char j_1;
-    char is_closed;
-    char l_r;
+    char box_i;
+    char box_j;
     char is_chain; // an indicator that indicates that move done by dfs or not
     struct play *next; // a pointer to the next move in the stack
 } play;
@@ -57,8 +57,8 @@ extern char box_edges [max_game_height][max__game_width];
 
 extern char n_player1;
 extern char n_player2;
-extern char player_1_name[30];
-extern char player_2_name[30];
+extern char player_1_name[31]; // assume max size is  30
+extern char player_2_name[31]; 
 extern char turn;
 extern char temp;
 extern char mode;
@@ -72,7 +72,6 @@ char game_width;
 char vertical_line[max_game_height][max__game_width];
 char horizontal_line[max_game_height][max__game_width];
 char box [max_game_height][max__game_width];
-char box_edges [max_game_height][max__game_width];
 char n_player1;
 char n_player2;
 char player_1_name[30];
@@ -80,7 +79,6 @@ char player_2_name[30];
 char turn;
 char temp;
 char mode;
-}game_data;
-extern game_data *ptr_game_data;
+} game_data;
 
 #endif

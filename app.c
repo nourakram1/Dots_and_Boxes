@@ -1,7 +1,6 @@
 #include "filling_data.h"
 #include "data.h"
 
-// add game edges // improved reset
 
 play * undo_stack = NULL;
 play * redo_stack = NULL;
@@ -16,8 +15,8 @@ char box_edges [max_game_height][max__game_width];
 
 char n_player1 = 0;
 char n_player2 = 0;
-char player_1_name[30];
-char player_2_name[30];
+char player_1_name[31];
+char player_2_name[31];
 char turn = 1;
 char temp = 0;
 char mode;

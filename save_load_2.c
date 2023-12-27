@@ -47,67 +47,35 @@ void load (game_data *game_data_ptr)
 void save_exit(void)
 {
     printf("Enter S For Save, E for Exit,Else For Continue : ");
-    char input [15] = "nn";
-    strcpy(input,scan_string(2));
+    time_t start = time(NULL);
+    char input [10] = "nn";
+    while(1)
+    {
+        strcpy(input,scan_string(2));
+        if(difftime(time(NULL),start) > 5 )
+        {
+            break;
+        } 
+
+    }
     if(input[0] >= 65 && input[0] <= 90)
     {
         input[0] = input[0] - 65 + 97;
     }
-    if(input[0] == 'e' || input [0] =='E' && strlen(input)== 1)
+    if(input[0] == 'e' || input [0] =='E')
     {
         free_redo_stack();
         free_undo_stack();
         printf(ANSI_COLOR_MAGENTA "game closed succesfully !\n" ANSI_RESET_ALL);
         exit(EXIT_SUCCESS);
     }
-    else if (input[0] == 's' || input[0] == 'S' && strlen(input)== 1)
+    else if (input[0] == 's' || input[0] == 'S')
     {
-        game_data save_1;
-        save(&save_1);
-        FILE * out;
-        out = fopen("save_1.bin","wb");
-        if (out == NULL)
-        {
-            printf("Save Failed\n");
-            exit(EXIT_FAILURE);
-        }
-        int written = fwrite(&save_1, sizeof(game_data), 1, out);
-        fclose(out);
-        if(written == 0)
-        {
-            printf("Save Failed\n");
-            exit(EXIT_FAILURE);
-        }
-        else
-        {
-            printf("save done\n");
-            return;
-        }
+        // manage file
     }
     else
     {
         return;
 
     }
-}
-void load_game (void)
-{
-    game_data save_1;
-    FILE * in;
-    in = fopen("save_1.bin","rb");
-    if(in == NULL)
-    {
-        printf("Load Failed");
-        exit(EXIT_FAILURE);
-    }
-    int read = fread(&save_1,sizeof(game_data),1,in);
-    fclose(in);
-    if(read == 0)
-    {
-        printf("Load Failed");
-        exit(EXIT_FAILURE);  
-    }
-    load(&save_1);
-    printf("load done \n\n\n");
-    game_flow();
 }
