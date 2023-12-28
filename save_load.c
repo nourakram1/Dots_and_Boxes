@@ -114,6 +114,8 @@ void load_game (void)
     }
     load(&save_1);
     printf("load done \n\n\n");
+    free_redo_stack();
+    free_undo_stack();
     game_flow();
 }
 void undo_redo (char input)

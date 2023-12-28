@@ -54,6 +54,11 @@ extern char vertical_line[max_game_height][max__game_width];
 extern char horizontal_line[max_game_height][max__game_width];
 extern char box [max_game_height][max__game_width];
 extern char box_edges [max_game_height][max__game_width];
+typedef struct {
+    char is_visited; // for dfs
+    char is_visited_2; // for dry search
+}visited;
+extern visited dfs [max_game_height][max__game_width];
 
 extern char n_player1;
 extern char n_player2;

@@ -12,6 +12,7 @@ char vertical_line[max_game_height][max__game_width];
 char horizontal_line[max_game_height][max__game_width];
 char box [max_game_height][max__game_width];
 char box_edges [max_game_height][max__game_width];
+visited dfs [max_game_height][max__game_width];
 
 char n_player1 = 0;
 char n_player2 = 0;

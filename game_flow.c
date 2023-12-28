@@ -191,7 +191,9 @@ void game_flow(void)
         printf("Tie !!");
     }
 
-    // update rank
+    // update rankfree_redo_stack();
+    free_undo_stack();
+    free_redo_stack();
     menu();
 }
 
