@@ -947,7 +947,7 @@ char dry_chain (int i, int j,char h_v,char l_r)
             }
             else if (horizontal_line [i+1][j-1] && vertical_line[i][j-1])
             {
-               if (dry_chain(i,j-1,1,2))
+               if (dry_chain(i,j-1,1,1))
                 {
                     dfs[i][j-1].is_visited_2=1;
                     return 1;
