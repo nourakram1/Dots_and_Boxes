@@ -33,5 +33,12 @@ void print_grid(void);
 void undo_redo (char input);
 void count_player_moves(char *player_1, char *player_2,char * remaining);
 void name_format (char * name);
+void load_ranking_file(void);
+void printing_records(void);
+void reload_ranking_file(void);
+int check_if_player_new(char player_name[]);
+void put_palyer_if_exist(int i);
+void put_palyer_if_dosnt_exist(int won_or_not, char *player_name, int boxes);
+
 
 #endif

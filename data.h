@@ -91,4 +91,18 @@ char temp;
 char mode;
 } game_data;
 
+#define TOTAL_NUMBER_OF_PLAYERS 100
+#define MAX_LENGTH_OF_NAME 31
+
+typedef struct{
+    char name[MAX_LENGTH_OF_NAME];
+    int wins;
+    int boxes;
+} player;
+
+extern player players[TOTAL_NUMBER_OF_PLAYERS];
+extern int records;
+extern char is_player_1_new;
+extern char is_player_2_new;
+
 #endif

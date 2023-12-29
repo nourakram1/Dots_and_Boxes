@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-
+#include <data.h>
+#include <filling_data.h>
 //used_globals
 //.....................................................
 
@@ -15,23 +12,12 @@ char player_2_name[31] = "ahmedragy";
 
 //new_globals
 //.....................................................
-#define TOTAL_NUMBER_OF_PLAYERS 100
-#define MAX_LENGTH_OF_NAME 31
 
-typedef struct{
-    char name[MAX_LENGTH_OF_NAME];
-    int wins;
-    int boxes;
-} player;
-
-player players[TOTAL_NUMBER_OF_PLAYERS];
-int records = 0;
-char is_player_1_new;
-char is_player_2_new;
 //.....................................................
 
 void load_ranking_file(void)
 {
+    records = 0;
     FILE * ranking_file = fopen("ranking.csv", "r");
     if (ranking_file == NULL)
     {
@@ -219,7 +205,7 @@ int main(void)
 {
     load_ranking_file();
     printing_records();
-    put_palyer_if_dosnt_exist(1,"ahmedragy",23);
+    put_palyer_if_dosnt_exist(1,"ah",23);
     reload_ranking_file();
     printing_records();
     return 0;
