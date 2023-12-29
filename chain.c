@@ -189,10 +189,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
     dfs[i][j].is_visited = 1;
     if( h_v == 1 && l_r == 2 ) // under horizontal line
     {
-        /*if (!vertical_line[i][j] && !vertical_line[i][j+1] && horizontal_line[i+1][j] )
-        {
-            return 1; // important for uncompleted +
-        }*/
         if (i + 1 < game_height ) // there it's box below me so check possible cases
         {
             if (vertical_line[i+1][j] && vertical_line[i+1][j+1] && horizontal_line[i+2][j] != 0) 
@@ -251,7 +247,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                     return 0;
                 }
             }
-            else if(dfs[i+1][j].is_visited == 0 && dry_chain(i+1,j,1,2) && dry_chain(i+1,j,2,2)&&dry_chain(i+1,j,2,1))
+            else if(dry_chain(i+1,j,1,2) && dry_chain(i+1,j,2,2)&&dry_chain(i+1,j,2,1))
             {// + like chain
     
                 chain(i+1,j,1,2,turn);
@@ -280,10 +276,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             {
                 return 1;
             }
-            /*else if(vertical_line[i][j] && vertical_line[i][j+1] &&dfs[i+1][j].is_visited)
-            {
-            return 1;
-            }*/
+            
             else {return 0;}
         }
         
@@ -303,10 +296,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
 
     else if( h_v == 1 && l_r == 1 )
     { 
-        /*if (!vertical_line[i][j] && !vertical_line[i][j+1] && horizontal_line[i][j] )
-        {
-            return 1; // important for uncompleted +
-        }*/  
+       
         if(i-1 >= 0) // above horizontal line
         {
             if (vertical_line[i-1][j] && vertical_line[i-1][j+1] && horizontal_line[i-1][j] != 0)
@@ -319,7 +309,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
 
             else if(vertical_line[i-1][j] && vertical_line[i-1][j+1] && horizontal_line[i][j] == 0)
             {
-                if(turn != 0 && chain(i-1,j,1,1,turn))
+                if(chain(i-1,j,1,1,turn))
                 {
                 
                     horizontal_line[i-1][j] = turn;
@@ -336,7 +326,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
 
             else if (horizontal_line[i-1][j] && vertical_line[i-1][j])
             {
-                if(turn !=0 && chain(i-1,j,2,2,turn))
+                if(chain(i-1,j,2,2,turn))
                 {
                 vertical_line [i-1][j+1] = turn;
                 box[i-1][j] = turn;
@@ -353,7 +343,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             }
             else if (horizontal_line[i-1][j] && vertical_line [i-1][j+1])
             {
-                if(turn !=0 && chain(i-1,j,2,1,turn))
+                if(chain(i-1,j,2,1,turn))
                 {
                 vertical_line[i-1][j] = turn;
                 box[i-1][j] = turn;
@@ -366,7 +356,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                     return 0;
                 }
             }
-            else if(dfs[i-1][j].is_visited == 0 && dry_chain(i-1,j,1,1)&&dry_chain(i-1,j,2,1)&&dry_chain(i-1,j,2,2))
+            else if(dry_chain(i-1,j,1,1)&&dry_chain(i-1,j,2,1)&&dry_chain(i-1,j,2,2))
             {
                 chain(i-1,j,1,1,turn);
                 chain(i-1,j,2,1,turn);
@@ -394,10 +384,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             {
                 return 1;
             }
-            /*else if (vertical_line[i][j] && vertical_line[i][j+1] && dfs[i-1][j].is_visited)
-            {
-            return 1;
-            }*/
             else
             {
                 return 0;
@@ -421,10 +407,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
 
     else if (h_v == 2 && l_r == 2) // right vertical line 
     {
-        /*if (!horizontal_line[i][j] && !horizontal_line[i+1][j] && vertical_line[i][j+1] )
-        {
-            return 1; // important for uncompleted +
-        }*/
         if (j+1 < game_width)
         {
             if (horizontal_line[i][j+1] && horizontal_line[i+1][j+1] && vertical_line[i][j+2] != 0 )
@@ -455,7 +437,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
 
             else if (horizontal_line[i][j+1] && vertical_line[i][j+2])
             {
-                if (turn != 0 && chain(i,j+1,1,2,turn))
+                if (chain(i,j+1,1,2,turn))
                 {
                     horizontal_line[i+1][j+1] = turn;
                     box[i][j+1] = turn;
@@ -483,11 +465,12 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                 }
                 
             }
-            else if(dfs[i][j+1].is_visited == 0 && dry_chain(i,j+1,2,2)&&dry_chain(i,j+1,1,2) && dry_chain(i,j+1,1,1))
+            else if(dry_chain(i,j+1,2,2)&&dry_chain(i,j+1,1,2) && dry_chain(i,j+1,1,1))
             {
+                chain(i,j+1,2,2,turn);
                 chain(i,j+1,1,1,turn);
                 chain(i,j+1,1,2,turn);
-                chain(i,j+1,2,2,turn);
+
                 if(!vertical_line[i][j+2])
                 {
                     vertical_line[i][j+2]=turn;
@@ -511,10 +494,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             {
                 return 1;
             }
-            /*else if (horizontal_line[i][j] && horizontal_line[i+1][j] && dfs[i][j+1].is_visited )
-            {
-            return 1;
-            }*/
             else
             {
                 return 0;
@@ -536,10 +515,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
     }
     else // h_v == 2 l_r == 1 // vertical line to left
     {
-        /*if (!horizontal_line[i][j] && !horizontal_line[i+1][j] && vertical_line[i][j] )
-        {
-            return 1; // important for uncompleted +
-        }*/
+       
         if(j-1 >= 0)
         {
 
@@ -584,7 +560,7 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             }
             else if (horizontal_line [i+1][j-1] && vertical_line[i][j-1])
             {
-                if(turn !=0 && chain(i,j-1,1,1,turn))
+                if(chain(i,j-1,1,1,turn))
                 {
                 horizontal_line[i][j-1] = turn;
                 box[i][j-1] = turn;
@@ -598,11 +574,12 @@ char chain (int i, int j,char h_v,char l_r,char turn)
 
          
             }
-            else if(dfs[i][j-1].is_visited == 0 && dry_chain(i,j-1,2,1)&&dry_chain(i,j-1,1,1)&&dry_chain(i,j-1,1,2))
+            else if(dry_chain(i,j-1,2,1)&&dry_chain(i,j-1,1,1)&&dry_chain(i,j-1,1,2))
             {
+                chain(i,j-1,2,1,turn);
                 chain(i,j-1,1,1,turn);
                 chain(i,j-1,1,2,turn);
-                chain(i,j-1,2,1,turn);
+                
                 if(!vertical_line[i][j-1])
                 {
                     vertical_line[i][j-1]=turn;
@@ -625,10 +602,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             {
                 return 1;
             }
-            /*else if (horizontal_line[i][j] && horizontal_line[i+1][j] && dfs[i][j-1].is_visited)
-            {
-            return 1;
-            }*/
             else 
             {
                 return 0;
@@ -718,10 +691,6 @@ char dry_chain (int i, int j,char h_v,char l_r)
             {
                 return 1;
             }
-            /*else if(vertical_line[i][j] && vertical_line[i][j+1]&&dfs[i+1][j].is_visited_2)
-            {
-            return 1;
-            }*/
             else {return 0;}
         }
         else // mean no box below me 
@@ -797,10 +766,6 @@ char dry_chain (int i, int j,char h_v,char l_r)
             {
                 return 1;
             }
-            /*else if (vertical_line[i][j] && vertical_line[i][j+1] &&dfs[i-1][j].is_visited_2)
-            {
-            return 1;
-            }*/
             else
             {
                 return 0;
@@ -885,10 +850,6 @@ char dry_chain (int i, int j,char h_v,char l_r)
             {
                 return 1;
             }
-            /*else if (horizontal_line[i][j] && horizontal_line[i+1][j] &&dfs[i][j+1].is_visited_2)
-            {
-            return 1;
-            }*/
             else
             {
                 return 0;
@@ -967,10 +928,6 @@ char dry_chain (int i, int j,char h_v,char l_r)
             {
                 return 1;
             }
-            /*else if (horizontal_line[i][j] && horizontal_line[i+1][j] &&dfs[i][j-1].is_visited_2)
-            {
-            return 1;
-            }*/
             else 
             {
                 return 0;

@@ -103,6 +103,7 @@ void load_game (void)
     if(in == NULL)
     {
         printf("Load Failed");
+        menu();
         return;
     }
     int read = fread(&save_1,sizeof(game_data),1,in);
@@ -110,7 +111,8 @@ void load_game (void)
     if(read == 0)
     {
         printf("Load Failed");
-       return;  
+        menu();
+        return;  
     }
     load(&save_1);
     printf("load done \n\n\n");
@@ -128,6 +130,10 @@ void undo_redo (char input)
             print_grid();
             temp = number_of_closed_boxes();
         }
+        else
+        {
+            printf("No Moves To Redo !!\n");
+        }
 
     }
     else if (undo_stack == NULL && redo_stack != NULL)
@@ -139,6 +145,10 @@ void undo_redo (char input)
             print_grid();
             temp = number_of_closed_boxes();
             
+        }
+        else
+        {
+            printf("No Moves To Undo !!\n");
         }
 
     }
@@ -159,7 +169,16 @@ void undo_redo (char input)
     }
     else
     {
-        printf("No Moves\n");
+        if(input == 'r')
+        {
+            printf("No Moves To Redo !!\n");
+        }
+        else
+        {
+            printf("No Moves To Undo !!\n");
+
+        }
+       
     }
 
 }
