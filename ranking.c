@@ -1,5 +1,10 @@
-#include <data.h>
-#include <filling_data.h>
+#include "data.h"
+#include "filling_data.h"
+
+player players[TOTAL_NUMBER_OF_PLAYERS];
+char is_player_1_new;
+char is_player_2_new;
+int records;
 
 void load_ranking_file(void)
 {

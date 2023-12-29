@@ -78,7 +78,6 @@ void menu (void)
     {
         load_game();
     }
-    free(input);
 }
 
 void game_flow(void)
