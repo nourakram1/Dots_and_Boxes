@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 //used_globals
 //.....................................................
 
-char n_player1  = 23;
+char n_player1 = 23;
 char n_player2 = 12; 
 char player_1_name[31] = "Nourtaha"; // assume max size is  30
 char player_2_name[31] = "ahmedragy"; 
@@ -69,10 +70,10 @@ void load_ranking_file(void)
 void printing_records(void)
 {
     printf("Rankings:\n");
-    printf("Name\t\tWins\tboxes\n");
+    printf("Name\t\t\t\tWins\tboxes\n");
     for(int i = 0; i < records; i++)
     {
-        printf("%s\t\t%i\t%i\n", players[i].name, players[i].wins, players[i].boxes);
+        printf("%s\t\t\t\t%i\t%i\n", players[i].name, players[i].wins, players[i].boxes);
     }
     printf("\n");
 }
@@ -99,19 +100,60 @@ void reload_ranking_file(void)//reload must be done after loading the ranking fi
     rename("temp.csv", "ranking.csv"); //renaming the new file to the old file's name
 }
 
-void check_if_player_new()
+int check_if_player_new(char player_name[])//takes the player name and checks if he played or not and if he exists it returns his rank, else it returns -1
 {
-
+    for(int i = 0; i < records; i++)
+    {
+        if(!strcmp(player_name, players[i].name))
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
-void put_palyer_if_exist()
+void put_palyer_if_exist(int i)
 {
-
+    player temp;
+    int j = i - 1;
+    while(j != -1)
+    {
+        if(players[j].wins < players[i].wins)
+        {
+            temp.wins = players[j].wins;
+            temp.boxes = players[j].boxes;
+            strcpy(temp.name, players[j].name);
+            players[j].wins = players[i].wins;
+            players[j].boxes = players[i].boxes;
+            strcpy(players[j].name, players[i].name);
+            players[i].wins = temp.wins;
+            players[i].boxes = temp.boxes;
+            strcpy(players[i].name, temp.name);
+            i--;
+            j--;
+        }
+        else
+        {
+            break;
+        }
+    }
 }
 
-void put_palyer_if_dosnt_exist()
+void put_palyer_if_dosnt_exist(int won_or_not, char *player_name, int boxes)
 {
-    
+    //initializing a new struct for the new player
+    if(won_or_not == 1)
+    {
+        players[records].wins = 10;
+    }
+    else
+    {
+        players[records].wins = 0;
+    }
+    players[records].boxes = boxes;
+    strcpy(players[records].name, player_name);
+    put_palyer_if_exist(records);
+    records++;
 }
 
 
@@ -177,6 +219,7 @@ int main(void)
 {
     load_ranking_file();
     printing_records();
+    put_palyer_if_dosnt_exist(1,"ahmedragy",23);
     reload_ranking_file();
     printing_records();
     return 0;
