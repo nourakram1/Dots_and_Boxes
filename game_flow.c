@@ -78,6 +78,7 @@ void menu (void)
     {
         load_game();
     }
+    free(input);
 }
 
 void game_flow(void)
@@ -189,17 +190,22 @@ void game_flow(void)
             if(n_player1 > n_player2)
             {
                 printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_1_name);
+                update_rank(1);
+                reload_ranking_file();
             }
             else if (n_player1 < n_player2)
             {
                 printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_2_name);
+                update_rank(2);
+                reload_ranking_file();
+
             }
             else
             {
                 printf("Tie !!");
+                update_rank(0);
+                reload_ranking_file();
             }
-
-            // update rankfree_redo_stack();
             free_undo_stack();
             free_redo_stack();
             menu();
@@ -235,18 +241,15 @@ char * scan_string(char length) // take actual char need to be readed and clear 
     char c;
     string s = malloc (length+1);
     int i=0;
-    scanf("%c",&c);
-    while (c!=10 && i < length)
+    while((c=getchar()) != '\n')
     {
-        s[i]=c;
-        i++;
-        scanf("%c",&c);
+        if(i < length)
+        {
+            s[i]=c;
+            i++;
+        }
     }
-    s[i] = '\0';
-    if(i==length)
-    {
-        while(getchar()!='\n');
-    }
+    s[i]='\0';
     return s;
 }
 void count_box_edges (void)
