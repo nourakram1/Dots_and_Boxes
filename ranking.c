@@ -113,6 +113,8 @@ void put_palyer_if_dosnt_exist()
 {
     
 }
+
+
 // shit string n charchters from index i
 void shift_n (char * name, int i, int n)
 {
@@ -167,7 +169,7 @@ void name_format (char * name)
     {
         shift_n(name, 0, 1);
     }
-    
+
 }
 
 

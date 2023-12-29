@@ -129,6 +129,13 @@ void game_flow(void)
                 undo_redo(values[0]);
                 continue;
             }
+            else if (values[0] =='m' && strlen(values)== 1)
+            {
+                free_redo_stack();
+                free_undo_stack();
+                menu();
+                break;
+            }
             else
             {
             values = check_if_line_exist(values);
@@ -175,26 +182,32 @@ void game_flow(void)
             temp = nubmer_of_closed_boxes;
 
         }
+        /////////////
+        if(nubmer_of_closed_boxes == game_height*game_width) // game ended
+        {
+            if(n_player1 > n_player2)
+            {
+                printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_1_name);
+            }
+            else if (n_player1 < n_player2)
+            {
+                printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_2_name);
+            }
+            else
+            {
+                printf("Tie !!");
+            }
+
+            // update rankfree_redo_stack();
+            free_undo_stack();
+            free_redo_stack();
+            menu();
+
+        }
     }
 
 
-    if(n_player1 > n_player2)
-    {
-        printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_1_name);
-    }
-    else if (n_player1 < n_player2)
-    {
-        printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_2_name);
-    }
-    else
-    {
-        printf("Tie !!");
-    }
-
-    // update rankfree_redo_stack();
-    free_undo_stack();
-    free_redo_stack();
-    menu();
+    
 }
 
 void reset (void)
@@ -237,10 +250,11 @@ char * scan_string(char length) // take actual char need to be readed and clear 
 }
 void count_box_edges (void)
 {
+    int i,j;
     zero_edges();
-    for (int i = 0; i <= game_height ; i++)
+    for (i = 0; i <= game_height ; i++)
     {
-        for (int j = 0; j < game_width; j++)
+        for (j = 0; j < game_width; j++)
         {
             if (i == 0)
             {
