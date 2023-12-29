@@ -144,7 +144,7 @@ void put_palyer_if_dosnt_exist(int won_or_not, char *player_name, int boxes)
     //initializing a new struct for the new player
     if(won_or_not == 1)
     {
-        players[records].wins = 10;
+        players[records].wins = 1;
     }
     else
     {
