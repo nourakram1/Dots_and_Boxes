@@ -39,6 +39,10 @@ void reload_ranking_file(void);
 int check_if_player_new(char player_name[]);
 void put_palyer_if_exist(int i);
 void put_palyer_if_dosnt_exist(int won_or_not, char *player_name, int boxes);
+void load_ranking_file(void);
+void reload_ranking_file(void);
+void update_rank(int winner);
+void printing_records(void);
 
 
 #endif

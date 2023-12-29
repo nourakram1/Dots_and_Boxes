@@ -1,19 +1,5 @@
 #include <data.h>
 #include <filling_data.h>
-//used_globals
-//.....................................................
-
-char n_player1 = 23;
-char n_player2 = 12; 
-char player_1_name[31] = "Nourtaha"; // assume max size is  30
-char player_2_name[31] = "ahmedragy"; 
-
-//.....................................................
-
-//new_globals
-//.....................................................
-
-//.....................................................
 
 void load_ranking_file(void)
 {
@@ -201,13 +187,79 @@ void name_format (char * name)
 }
 
 
-int main(void)
+void update_rank(int winner)
 {
-    load_ranking_file();
-    printing_records();
-    put_palyer_if_dosnt_exist(1,"ah",23);
-    reload_ranking_file();
-    printing_records();
-    return 0;
+    name_format(player_1_name);
+    name_format(player_2_name);
+    int p1_index = check_if_player_new(player_1_name);
+    int p2_index = check_if_player_new(player_2_name);
+    if(winner == 1)
+    {
+        if(p1_index != -1)
+        {
+            players[p1_index].wins++;
+            players[p1_index].boxes += n_player1;
+            put_palyer_if_exist(p1_index);
+        }
+        else
+        {
+            put_palyer_if_dosnt_exist(1, player_1_name, n_player1);
+        }
+
+        if(p2_index != -1)
+        {
+            players[p2_index].boxes += n_player2;
+            put_palyer_if_exist(p2_index);
+        }
+        else
+        {
+            put_palyer_if_dosnt_exist(0, player_2_name, n_player2);
+        }
+    }
+    else if(winner == 2)
+    {
+        if(p2_index != -1)
+        {
+            players[p2_index].wins++;
+            players[p2_index].boxes += n_player2;
+            put_palyer_if_exist(p2_index);
+        }
+        else
+        {
+            put_palyer_if_dosnt_exist(1, player_2_name, n_player2);
+        }
+
+        if(p1_index != -1)
+        {
+            players[p1_index].boxes += n_player1;
+            put_palyer_if_exist(p1_index);
+        }
+        else
+        {
+            put_palyer_if_dosnt_exist(0, player_1_name, n_player1);
+        }
+    }
+    else if(winner == 0)
+    {
+        if(p2_index != -1)
+        {
+            players[p2_index].boxes += n_player2;
+            put_palyer_if_exist(p2_index);
+        }
+        else
+        {
+            put_palyer_if_dosnt_exist(0, player_2_name, n_player2);
+        }
+
+        if(p1_index != -1)
+        {
+            players[p1_index].boxes += n_player1;
+            put_palyer_if_exist(p1_index);
+        }
+        else
+        {
+            put_palyer_if_dosnt_exist(0, player_1_name, n_player1);
+        }
+    }
 }
 
