@@ -3,7 +3,7 @@
 
 #include "data.h"
 
-char * check_if_line_exist (char values[]);
+char check_if_line_exist (char values[]);
 char * scan_validity (void);
 void print_matrices();
 void fill_data_into_matrices(char values[]);

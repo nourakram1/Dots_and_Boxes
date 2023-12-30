@@ -1,5 +1,5 @@
 #include "data.h"
-#include "filling_data.h"
+#include "game.h"
 
 player players[TOTAL_NUMBER_OF_PLAYERS];
 char is_player_1_new;

@@ -1,5 +1,5 @@
 #include "data.h"
-#include "filling_data.h"
+#include "game.h"
 char name[30] = "   jkjkjk ADDDfhgg     ui  ";
 void shift_n (char * name, int i, int n)
 {

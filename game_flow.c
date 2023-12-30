@@ -1,4 +1,4 @@
-#include "filling_data.h"
+#include "game.h"
 #include "data.h"
 
 // menu
@@ -6,14 +6,14 @@
 // no of edges for each box
 void menu (void)
 {
-    char input[10];
+    char * input;
     printf(ANSI_COLOR_MAGENTA ANSI_BACKGROUND_CYAN ANSI_STYLE_BOLD "\n \n \n \t \t \t \t \t \t Dots And Boxes\n\n" ANSI_RESET_ALL);
     printf("\n\n");
     do{
         printf(ANSI_COLOR_MAGENTA "Enter\n");
         printf("N: For New Game\nL: For Load Game\nR: For Players Rank\nE: For Exit\n");
         printf("Input: "ANSI_RESET_ALL);
-        strcpy(input,scan_string(9)); 
+        input = scan_string(6); 
         if(input[0] >= 65 && input[0] <= 90)
         {
             input[0] = input[0] - 65 + 97;
@@ -21,40 +21,41 @@ void menu (void)
     }while (input[0] != 'r' && input[0] != 'e' && input[0] != 'n' && input[0] != 'l' || strlen(input) != 1);
 
 
-    if(input[0] == 'e' || input[0] == 'E')
+    if(input[0] == 'e')
     {
         printf(ANSI_COLOR_MAGENTA "game closed succesfully !\n" ANSI_RESET_ALL);
         free_undo_stack();
         free_redo_stack();
+        free(input);
         exit(EXIT_SUCCESS);
         
     }
-    else if(input[0] == 'r'||  input[0] == 'R')
+    else if(input[0] == 'r')
     {
         load_ranking_file();
         printing_records();
         menu();
     }
-    else if (input[0] == 'n' || input[0] == 'N')
+    else if (input[0] == 'n')
     {
         reset ();
         char c;
         do
         {
             printf(ANSI_COLOR_MAGENTA"Enter Game Size From 2 x 2 Till 9 x 9 In This Form (Row x Columbs)\n"ANSI_RESET_ALL);
-            strcpy(input,scan_string(9));
+            input = scan_string(6);
             game_height = input[0]-48;
             game_width = input[4]-48;
             c = input[2];
 
 
-        }while(strlen(input) > 5 || game_height < 2 || game_height > 9 || game_width < 2 || game_width > 9 || c!='x' || input[1]!=' ' || input[3]!=' ');
+        }while(strlen(input) != 5 || game_height < 2 || game_height > 9 || game_width < 2 || game_width > 9 || c!='x' || input[1]!=' ' || input[3]!=' ');
         do
         {
             printf(ANSI_COLOR_MAGENTA"Enter 1 : For 1 VS 1\nEnter 2 : For Computer Mode\n");
             printf("Input: "ANSI_RESET_ALL);
-            strcpy(input,scan_string(9));
-            mode = input [0]-48;
+            input = scan_string(6);
+            mode = input [0] - 48;
 
         }while (mode != 1 && mode != 2 || strlen(input)!=1);
         if(mode == 1)
@@ -78,6 +79,7 @@ void menu (void)
     {
         load_game();
     }
+    free(input);
 }
 
 void game_flow(void)
@@ -134,14 +136,13 @@ void game_flow(void)
             {
                 free_redo_stack();
                 free_undo_stack();
+                free(values);
                 menu();
                 break;
             }
             else
             {
-            values = check_if_line_exist(values);
-            fill_data_into_matrices(values);
-            h_v = vertical_or_horizontal(values);
+                h_v = vertical_or_horizontal(values);
             }
         
         }
@@ -207,6 +208,7 @@ void game_flow(void)
             }
             free_undo_stack();
             free_redo_stack();
+            free(values);
             menu();
 
         }

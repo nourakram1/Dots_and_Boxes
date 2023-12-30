@@ -1,5 +1,5 @@
 #include "data.h"
-#include "filling_data.h"
+#include "game.h"
 
 
 void fill_data_into_matrices(char values[])
@@ -79,8 +79,8 @@ void print_matrices(void)
 
 char * scan_validity (void)
 {
-    printf("Play or Enter E for Exit,R For Redo,U For Undo,S For Save,M For Menu : ");
-    char *input = malloc(10 * sizeof(char));
+    printf("Play or Enter E For Exit, R For Redo, U For Undo, S For Save, M For Menu : ");
+    char *input = malloc(10);
     strcpy(input,scan_string(9));
     if(input[0] >= 65 && input[0] <= 90)
     {
@@ -126,20 +126,25 @@ char * scan_validity (void)
         printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity(); 
     }
-    
+    input [0]--;
+    input [1]--;
+    input [2]--;
+    input [3]--;
+
+    if(check_if_line_exist(input))
+    {
+        return scan_validity();
+    }
     else
     {
-        char *s = malloc(4 * sizeof(char));
-        s[0]=input [0] -1;
-        s[1]=input [1]-1;
-        s[2]=input[2] -1;
-        s[3]=input[3]-1;
-        return s;
-    }  
+        fill_data_into_matrices(input);
+        return input;
+    }
+ 
 }
 
 
-char * check_if_line_exist (char values[])
+char check_if_line_exist (char values[])
 // check if the valid index is not played before during the game and force player to input valid cell
 {
     if(values[0] == values[1])
@@ -147,17 +152,17 @@ char * check_if_line_exist (char values[])
         if(values[2] < values[3] & horizontal_line[values[0]][values[2]] !=0 )
         {
             printf("choose empty cell\n");
-            return check_if_line_exist(scan_validity());   
+            return 1 ;   
         }
         else if (values[2] > values[3] & horizontal_line[values[0]][values[3]] !=0 )
         {
             printf("choose empty cell\n");
-            return check_if_line_exist(scan_validity());
+            return 1;
             // double call because if user insert repeated place then insert another repeated one 
         }
         else
         {
-            return values;
+            return 0 ;
         }
     }
     else if(values[2] == values[3])
@@ -165,22 +170,22 @@ char * check_if_line_exist (char values[])
         if(values[0] < values[1] & vertical_line[values[0]][values[2]] != 0)
         {
             printf("choose empty cell\n");
-            return check_if_line_exist(scan_validity());
+            return 1;
         }
         else if (values[0] > values[1] & vertical_line[values[1]][values[2]] != 0)
         {
             printf("choose empty cell\n");
-            return check_if_line_exist(scan_validity());
+            return 1;
         }
         else
         {
-            return values;
+            return 0;
         }
         
     }
     else
     {
-        return values;
+        return 0;
     }
 }
 

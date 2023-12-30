@@ -1,5 +1,5 @@
 #include "data.h"
-#include "filling_data.h"
+#include "game.h"
 
 char is_chain (char i, char j) // take a box has three edges to check with ai is it chain or not
 {
