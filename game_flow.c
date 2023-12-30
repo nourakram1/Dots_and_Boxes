@@ -191,20 +191,17 @@ void game_flow(void)
             {
                 printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_1_name);
                 update_rank(1);
-                reload_ranking_file();
             }
             else if (n_player1 < n_player2)
             {
                 printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_2_name);
                 update_rank(2);
-                reload_ranking_file();
 
             }
             else
             {
                 printf("Tie !!");
                 update_rank(0);
-                reload_ranking_file();
             }
             free_undo_stack();
             free_redo_stack();

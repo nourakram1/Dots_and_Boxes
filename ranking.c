@@ -193,10 +193,6 @@ void put_palyer_if_dosnt_exist(int won_or_not, char *player_name, int boxes)
     records++;
 }
 
-
-
-
-
 void update_rank(int winner)
 {
     name_format(player_1_name);
@@ -271,6 +267,7 @@ void update_rank(int winner)
             put_palyer_if_dosnt_exist(0, player_1_name, n_player1);
         }
     }
+    reload_ranking_file();
 }
 
 
