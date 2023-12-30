@@ -28,7 +28,8 @@ char mode;
 char i_1 = 0,j_1 = 0; 
 char h_v;
 game_data* ptr_game_data; // pointer for structure to use globally
-
+player players[TOTAL_NUMBER_OF_PLAYERS];
+int records;
 
 int main(void)
 {

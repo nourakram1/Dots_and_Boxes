@@ -58,7 +58,7 @@ void save_exit(char input)
         game_data save_1;
         save(&save_1);
         FILE * out;
-        char file_dir[100]= "/Users/ahmedehab/GIT_REPO/Dots_and_Boxes/saved_games/\"";
+        char file_dir[100]= "saved_games/\"";
         char file_name[31];
         printf("Enter File Name To Create It Without Extention : ");
         strcpy(file_name,scan_string(30));
@@ -93,7 +93,7 @@ void load_game (void)
 {
     game_data save_1;
     FILE * in;
-    char file_dir[100]= "/Users/ahmedehab/GIT_REPO/Dots_and_Boxes/saved_games/\"";
+    char file_dir[100]= "saved_games/\"";
     char file_name[31];
     printf("Enter File Name To load Without Extention : ");
     strcpy(file_name,scan_string(30));

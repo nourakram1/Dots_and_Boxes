@@ -102,7 +102,6 @@ typedef struct{
 
 extern player players[TOTAL_NUMBER_OF_PLAYERS];
 extern int records;
-extern char is_player_1_new;
-extern char is_player_2_new;
+
 
 #endif
