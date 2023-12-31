@@ -773,7 +773,7 @@ char dry_chain (int i, int j,char h_v,char l_r)
             }
             else if (i+1 < game_height)
             {
-                if (vertical_line[i+1][j] && !vertical_line[i+1][j+1] && !vertical_line[i][j] && !vertical_line[i][j+1] && horizontal_line[i][j])
+                if (vertical_line[i+1][j] && vertical_line[i+1][j+1] && !vertical_line[i][j] && !vertical_line[i][j+1] && horizontal_line[i][j])
                 {
                 return 1;
                 }
