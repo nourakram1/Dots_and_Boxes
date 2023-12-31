@@ -99,6 +99,7 @@ void load_game (void)
     FILE * in;
     in = fopen("saved_games/names.txt","r");
     char line [35];
+    printf("Saved Games\n");
     while(fgets(line,35,in) != NULL)
     {
         printf("%s",line);
