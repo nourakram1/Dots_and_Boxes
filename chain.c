@@ -688,10 +688,18 @@ char dry_chain (int i, int j,char h_v,char l_r)
                 dfs[i+1][j]=1;
                 return 1;
             }
-            else if (!vertical_line[i][j] && !vertical_line[i][j+1] && horizontal_line[i+1][j])
+            else if (i-1>=0)
             {
-                return 1;
+                if (vertical_line[i-1][j] && vertical_line[i-1][j+1] && !vertical_line[i][j] && !vertical_line[i][j+1] && horizontal_line[i+1][j])
+                {
+                    return 1;
+                }
+                else 
+                {
+                    return 0;
+                }
             }
+           
             else {return 0;}
         }
         else // mean no box below me 
@@ -763,9 +771,16 @@ char dry_chain (int i, int j,char h_v,char l_r)
                 dfs[i-1][j]=1;
                 return 1;
             }
-            else if (!vertical_line[i][j] && !vertical_line[i][j+1] && horizontal_line[i][j])
+            else if (i+1 < game_height)
             {
+                if (vertical_line[i+1][j] && !vertical_line[i+1][j+1] && !vertical_line[i][j] && !vertical_line[i][j+1] && horizontal_line[i][j])
+                {
                 return 1;
+                }
+                else 
+                {
+                    return 0;
+                }
             }
             else
             {
@@ -847,9 +862,16 @@ char dry_chain (int i, int j,char h_v,char l_r)
                 dfs[i][j+1]=1;
                 return 1;
             }
-            else if (!horizontal_line[i][j] && !horizontal_line[i+1][j] && vertical_line[i][j+1])
+            else if(j-1>=0)
             {
+                if (horizontal_line[i][j-1] && horizontal_line[i+1][j-1] && !horizontal_line[i][j] && !horizontal_line[i+1][j] && vertical_line[i][j+1])
+                {
                 return 1;
+                }
+                else
+                {
+                    return 0;
+                }
             }
             else
             {
@@ -925,9 +947,16 @@ char dry_chain (int i, int j,char h_v,char l_r)
                 dfs[i][j-1]=1;
                 return 1;
             }
-            else if(!horizontal_line[i][j] && !horizontal_line[i+1][j] && vertical_line[i][j])
+            else if (j+1<game_width)
             {
+                if(horizontal_line[i][j+1] && horizontal_line[i+1][j+1] && !horizontal_line[i][j] && !horizontal_line[i+1][j] && vertical_line[i][j])
+                {
                 return 1;
+                }
+                else
+                {
+                    return 0;
+                }
             }
             else 
             {
