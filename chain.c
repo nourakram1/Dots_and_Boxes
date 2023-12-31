@@ -86,7 +86,7 @@ char * scan_validity (void)
     {
         input[0] = input[0] - 65 + 97;
     }
-    if(input [0] == 'e' || input [0] == 's' && strlen(input) == 1 )
+    if((input [0] == 'e' || input [0] == 's') && strlen(input) == 1 )
     {
         return input;
     }
@@ -95,7 +95,7 @@ char * scan_validity (void)
         return input;
     }
 
-    if(input [0] == 'r' || input [0] == 'u' && strlen(input) == 1 )
+    if((input [0] == 'r' || input [0] == 'u') && strlen(input) == 1 )
     {
         return input;
     }
