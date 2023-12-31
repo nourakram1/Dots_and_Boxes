@@ -62,13 +62,16 @@ void menu (void)
         {
             printf(ANSI_COLOR_RED"Enter Player 1 Name : "ANSI_RESET_ALL);
             strcpy(player_1_name,scan_string(30));
+            name_format(player_1_name);
             printf(ANSI_COLOR_BLUE"Enter Player 2 Name : "ANSI_RESET_ALL);
             strcpy(player_2_name,scan_string(30));
+            name_format(player_2_name);
         }
         else
         {
             printf(ANSI_COLOR_RED"Enter Player 1 Name : " ANSI_RESET_ALL);
             strcpy(player_1_name,scan_string(30));
+            name_format(player_1_name);
             strcpy(player_2_name,"Computer");
 
         }
@@ -127,6 +130,7 @@ void game_flow(void)
             if(values[0]=='e' || values[0] =='s' && strlen(values)==1)
             {
                 save_exit(values[0]);
+                free(values);
                 continue;
 
             }
@@ -148,7 +152,7 @@ void game_flow(void)
                 free_undo_stack();
                 free(values);
                 menu();
-                break;
+                return;
             }
             else
             {
@@ -173,9 +177,9 @@ void game_flow(void)
         count_player_moves(&player_1_moves,&player_2_moves,&remaining_edges);
         char nubmer_of_closed_boxes = number_of_closed_boxes();
         printf(ANSI_COLOR_RED"%s's Score: %d \t"ANSI_RESET_ALL, player_1_name, n_player1);
-        printf(ANSI_COLOR_BLUE"%s's Score: %d \t"ANSI_RESET_ALL, player_2_name, n_player2);
+        printf(ANSI_COLOR_BLUE"%s's Score: %d \n"ANSI_RESET_ALL, player_2_name, n_player2);
         printf(ANSI_COLOR_RED"%s's Moves: %d \t"ANSI_RESET_ALL, player_1_name, player_1_moves);
-        printf(ANSI_COLOR_BLUE"%s's Moves: %d \t"ANSI_RESET_ALL, player_2_name, player_2_moves);
+        printf(ANSI_COLOR_BLUE"%s's Moves: %d \n"ANSI_RESET_ALL, player_2_name, player_2_moves);
         printf(ANSI_COLOR_MAGENTA"Remaining Edges : %d\n"ANSI_RESET_ALL,remaining_edges);
         if(temp == nubmer_of_closed_boxes)
         {
@@ -197,36 +201,69 @@ void game_flow(void)
             temp = nubmer_of_closed_boxes;
 
         }
-        /////////////
-        if(nubmer_of_closed_boxes == game_height*game_width) // game ended
-        {
-            if(n_player1 > n_player2)
-            {
-                printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_1_name);
-                update_rank(1);
-            }
-            else if (n_player1 < n_player2)
-            {
-                printf(ANSI_COLOR_YELLOW"%s Win !!\n"ANSI_RESET_ALL,player_2_name);
-                update_rank(2);
-
-            }
-            else
-            {
-                printf("Tie !!");
-                update_rank(0);
-            }
-            free_undo_stack();
-            free_redo_stack();
-            free(values);
-            menu();
-
-        }
+        
     }
 
 
-    
-}
+    if (n_player1 > n_player2)
+    {
+        printf(ANSI_COLOR_YELLOW "%s Win !!\n" ANSI_RESET_ALL, player_1_name);
+        update_rank(1);
+    }
+    else if (n_player1 < n_player2)
+    {
+        printf(ANSI_COLOR_YELLOW "%s Win !!\n" ANSI_RESET_ALL, player_2_name);
+        update_rank(2);
+    }
+    else
+    {
+        printf("Tie !!\n");
+        update_rank(0);
+    }
+    free_undo_stack();
+    free_redo_stack();
+    do
+    {
+        printf(ANSI_COLOR_MAGENTA "Enter M: For Menu, R: For Replay Game, E: For Exit : " ANSI_RESET_ALL);
+        values = scan_string(6);
+        if (values[0] >= 65 && values[0] <= 90)
+        {
+            values[0] = values[0] - 65 + 97;
+        }
+    } while (values[0] != 'm' && values[0] != 'r' && values[0] != 'e' || strlen(values) != 1);
+    if (values[0] == 'm')
+    {
+        free(values);
+        menu();
+        return;
+    }
+    else if (values[0] == 'e')
+    {
+        free(values);
+        printf(ANSI_COLOR_MAGENTA "game closed succesfully !\n" ANSI_RESET_ALL);
+        exit(EXIT_SUCCESS);
+    }
+    else if (values[0] == 'r')
+    {
+        reset();
+        if (n_player1 > n_player2)
+        {
+            turn = 1;
+            player_1_time = 0;
+            player_2_time = 0;
+            game_flow();
+            return;
+        }
+        else
+        {
+            turn = 2;
+            player_1_time = 0;
+            player_2_time = 0;
+            game_flow();
+            return;
+        }
+    }
+}    
 
 void reset (void)
 {

@@ -196,8 +196,6 @@ void put_palyer_if_dosnt_exist(int won_or_not, char *player_name, int boxes)
 void update_rank(int winner)
 {
     load_ranking_file();
-    name_format(player_1_name);
-    name_format(player_2_name);
     int p1_index = check_if_player_new(player_1_name);
     int p2_index = check_if_player_new(player_2_name);
     if(winner == 1)
