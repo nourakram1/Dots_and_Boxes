@@ -105,11 +105,11 @@ void load_ranking_file(void)
 
 void printing_records(void)
 {
-    printf("Rankings:\n");
-    printf("Name\t\t\t\tWins\tboxes\n");
+    printf(ANSI_COLOR_RED"Rankings:\n"ANSI_RESET_ALL);
+    printf(ANSI_COLOR_BLUE"Name\t\t\t\tWins\tboxes\n"ANSI_RESET_ALL);
     for(int i = 0; i < records; i++)
     {
-        printf("%-30s\t%-5i\t%-5i\n", players[i].name, players[i].wins, players[i].boxes);
+        printf(ANSI_COLOR_MAGENTA "%-30s\t%-5i\t%-5i\n" ANSI_RESET_ALL, players[i].name, players[i].wins, players[i].boxes);
     }
     printf("\n");
 }
