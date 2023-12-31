@@ -104,7 +104,12 @@ void load_ranking_file(void)
 }
 
 void printing_records(void)
-{
+{   
+    if(records == 0)
+    {
+        printf(ANSI_COLOR_MAGENTA"The ranking list is empty."ANSI_RESET_ALL);
+        return;
+    }
     printf(ANSI_COLOR_RED"Rankings:\n"ANSI_RESET_ALL);
     printf(ANSI_COLOR_BLUE"Name\t\t\t\tWins\tboxes\n"ANSI_RESET_ALL);
     for(int i = 0; i < records; i++)
