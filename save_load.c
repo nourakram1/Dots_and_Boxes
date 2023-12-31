@@ -79,9 +79,13 @@ void save_exit(char input)
         }
         else
         {
-            printf("save done\n");
-            return;
+            printf("Save Done With Name : %s\n",file_name);
         }
+        out = fopen("saved_games/names.txt","a");
+        fprintf(out,"%s\n",file_name);
+        fclose(out);
+
+    
     }
     else
     {
@@ -93,9 +97,17 @@ void load_game (void)
 {
     game_data save_1;
     FILE * in;
+    in = fopen("saved_games/names.txt","r");
+    char line [35];
+    while(fgets(line,35,in) != NULL)
+    {
+        printf("%s",line);
+    }
+    fclose(in);
+
     char file_dir[100]= "saved_games/\"";
     char file_name[31];
-    printf("Enter File Name To load Without Extention : ");
+    printf("Choose File Name To load : ");
     strcpy(file_name,scan_string(30));
     strcat(file_dir,file_name);
     strcat(file_dir,".bin\"");

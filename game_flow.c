@@ -11,7 +11,7 @@ void menu (void)
     printf("\n\n");
     do{
         printf(ANSI_COLOR_MAGENTA "Enter\n");
-        printf("N: For New Game\nL: For Load Game\nR: For Players Rank\nE: For Exit\n");
+        printf("N For New Game\nL For Load Game\nR For Players Rank\nE For Exit\n");
         printf("Input: "ANSI_RESET_ALL);
         input = scan_string(6); 
         if(input[0] >= 65 && input[0] <= 90)
@@ -42,7 +42,7 @@ void menu (void)
         char c;
         do
         {
-            printf(ANSI_COLOR_MAGENTA"Enter Game Size From 2 x 2 Till 9 x 9 In This Form (Row x Columbs)\n"ANSI_RESET_ALL);
+            printf(ANSI_COLOR_MAGENTA"Enter Game Size From 2 x 2 Till 9 x 9 In This Form Row x Columbs\nInput: "ANSI_RESET_ALL);
             input = scan_string(6);
             game_height = input[0]-48;
             game_width = input[4]-48;
@@ -233,7 +233,7 @@ void game_flow(void)
     free_redo_stack();
     do
     {
-        printf(ANSI_COLOR_MAGENTA "Enter M: For Menu, R: For Replay Game, E: For Exit : " ANSI_RESET_ALL);
+        printf(ANSI_COLOR_MAGENTA "Enter\nM For Menu\nR For Replay Game\nE For Exit\nInput: "ANSI_RESET_ALL);
         values = scan_string(6);
         if (values[0] >= 65 && values[0] <= 90)
         {
