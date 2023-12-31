@@ -109,7 +109,7 @@ void printing_records(void)
     printf("Name\t\t\t\tWins\tboxes\n");
     for(int i = 0; i < records; i++)
     {
-        printf("%s\t\t\t\t%i\t%i\n", players[i].name, players[i].wins, players[i].boxes);
+        printf("%-30s\t%-5i\t%-5i\n", players[i].name, players[i].wins, players[i].boxes);
     }
     printf("\n");
 }
@@ -195,6 +195,7 @@ void put_palyer_if_dosnt_exist(int won_or_not, char *player_name, int boxes)
 
 void update_rank(int winner)
 {
+    load_ranking_file();
     name_format(player_1_name);
     name_format(player_2_name);
     int p1_index = check_if_player_new(player_1_name);
@@ -269,19 +270,3 @@ void update_rank(int winner)
     }
     reload_ranking_file();
 }
-
-
-/*int main(void)
-{
-    load_ranking_file();
-    printing_records();
-    update_rank(0);
-    reload_ranking_file();
-    load_ranking_file();
-    printing_records();
-    update_rank(2);
-    reload_ranking_file();
-    load_ranking_file();
-    printing_records();
-    return 0;
-}*/

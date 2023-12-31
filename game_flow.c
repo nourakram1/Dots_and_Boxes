@@ -84,11 +84,17 @@ void menu (void)
 
 void game_flow(void)
 {
+    
+    time_t game_begin = time(NULL);
+    time_t now, diff;
     char * values;
     char player_1_moves,player_2_moves,remaining_edges;
     printf("\n\n");
-    printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
-    printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n\n" ANSI_RESET_ALL, player_2_time);
+    printf(ANSI_COLOR_RED"Time of %s to play : %li sec\t"ANSI_RESET_ALL, player_1_name, player_1_time);
+    printf(ANSI_COLOR_BLUE"Time of %s to play : %li sec\n"ANSI_RESET_ALL, player_2_name, player_2_time);
+    now = time(NULL);
+    diff = difftime(now, game_begin);
+    printf(ANSI_COLOR_MAGENTA"Time of game %li:%li\n"ANSI_RESET_ALL, diff / 60, diff % 60);
     print_grid();
     printf("\n\n");
     while(number_of_closed_boxes() != game_height * game_width)
@@ -127,8 +133,12 @@ void game_flow(void)
             else if (values[0]=='r' || values[0] =='u' && strlen(values)==1)
             {
                 printf("\n");
-                printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
-                printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n\n\n" ANSI_RESET_ALL, player_2_time);
+                
+                printf(ANSI_COLOR_RED"Time of %s to play : %li sec\t"ANSI_RESET_ALL, player_1_name, player_1_time);
+                printf(ANSI_COLOR_BLUE"Time of %s to play : %li sec\n"ANSI_RESET_ALL, player_2_name, player_2_time);
+                now = time(NULL);
+                diff = difftime(now, game_begin);
+                printf(ANSI_COLOR_MAGENTA"Time of game %li:%li\n"ANSI_RESET_ALL, diff / 60, diff % 60);
                 undo_redo(values[0]);
                 continue;
             }
@@ -153,8 +163,11 @@ void game_flow(void)
         }
         check_boxes();
         printf("\n");
-        printf(ANSI_COLOR_RED "time player 1 : %ld sec\t" ANSI_RESET_ALL, player_1_time);
-        printf( ANSI_COLOR_BLUE "time player 2 : %ld sec\n\n\n" ANSI_RESET_ALL, player_2_time);
+        printf(ANSI_COLOR_RED"Time of %s to play : %li sec\t"ANSI_RESET_ALL, player_1_name, player_1_time);
+        printf(ANSI_COLOR_BLUE"Time of %s to play : %li sec\n"ANSI_RESET_ALL, player_2_name, player_2_time);
+        now = time(NULL);
+        diff = difftime(now, game_begin);
+        printf(ANSI_COLOR_MAGENTA"Time of the game : %li:%li\n"ANSI_RESET_ALL, diff / 60, diff % 60);
         print_grid();
         printf("\n");
         count_player_moves(&player_1_moves,&player_2_moves,&remaining_edges);
