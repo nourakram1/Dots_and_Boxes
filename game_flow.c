@@ -7,7 +7,7 @@
 void menu (void)
 {
     char * input;
-    printf(ANSI_COLOR_MAGENTA ANSI_BACKGROUND_CYAN ANSI_STYLE_BOLD "\n\n\n \t \t \t \t \t \t Dots And Boxes\n\n\n" ANSI_RESET_ALL);
+    printf(ANSI_COLOR_CYAN ANSI_STYLE_BOLD "\n\n \t \t \t \t \t \t Dots And Boxes" ANSI_RESET_ALL);
     printf("\n\n");
     do{
         printf(ANSI_COLOR_MAGENTA "Enter\n");

@@ -23,152 +23,150 @@ char is_chain (char i, char j) // take a box has three edges to check with ai is
 }
 void AI_play (int i, int j)
 {
-    if(box_edges[i][j] == 1 || box_edges[i][j] == 0)
+    
+    
+    if(!horizontal_line[i][j] && box_edges[i-1][j] != 2) // horizontal line from up
     {
-        if(!horizontal_line[i][j] && box_edges[i-1][j] != 2) // horizontal line from up
-        {
-            horizontal_line[i][j] = 2;
-            i_1 = i;
-            j_1 = j;
-            h_v = 1;
-            return;
-        }
-        else if(!horizontal_line[i+1][j] && box_edges[i+1][j] != 2) // horezontal line from down
-        {
-            horizontal_line[i+1][j] = 2;
-            i_1 = i+1;
-            j_1 = j;
-            h_v = 1;
-            return;
-        }
-        else if(!vertical_line[i][j] && box_edges[i][j-1] != 2) // vertical left
-        {
-            vertical_line[i][j] = 2;
-            i_1 = i;
-            j_1 = j;
-            h_v = 2;
-            return;
-                    
-
-        }
-        else if (!vertical_line[i][j+1] && box_edges[i][j+1] != 2)
-        {
-            vertical_line[i][j+1] = 2;
-            i_1 = i;
-            j_1 = j+1;
-            h_v = 2;
-        }
+        horizontal_line[i][j] = 2;
+        i_1 = i;
+        j_1 = j;
+        h_v = 1;
+        return;
     }
-    else
+    else if(!horizontal_line[i+1][j] && box_edges[i+1][j] != 2) // horezontal line from down
     {
-        if(!vertical_line[i][j]) // vertical left
-        {
-            vertical_line[i][j] = 2;
-            i_1 = i;
-            j_1 = j;
-            h_v = 2;
-            return;
-            
+        horizontal_line[i+1][j] = 2;
+        i_1 = i+1;
+        j_1 = j;
+        h_v = 1;
+        return;
+    }
+    else if(!vertical_line[i][j] && box_edges[i][j-1] != 2) // vertical left
+    {
+        vertical_line[i][j] = 2;
+        i_1 = i;
+        j_1 = j;
+        h_v = 2;
+        return;
+                
 
-        }
-        else if(!horizontal_line[i][j]) // horizontal line from up
-        {
-            horizontal_line[i][j] = 2;
-            i_1 = i;
-            j_1 = j;
-            h_v = 1;
-            return;
-        }
-        else if(!vertical_line[i][j+1]) // vertical right
-        {
-            vertical_line[i][j+1] = 2;
-            i_1 = i;
-            j_1 = j+1;
-            h_v = 2;
-            return;
-        }
-        else// horezontal line from down
-        {
-            horizontal_line[i+1][j] = 2;
-            i_1 = i+1;
-            j_1 = j;
-            h_v = 1;
-        } 
-    }    
+    }
+    else if (!vertical_line[i][j+1] && box_edges[i][j+1] != 2)
+    {
+        vertical_line[i][j+1] = 2;
+        i_1 = i;
+        j_1 = j+1;
+        h_v = 2;
+        return;
+    }
+
+
+
+    else if(!vertical_line[i][j]) // vertical left
+    {
+        vertical_line[i][j] = 2;
+        i_1 = i;
+        j_1 = j;
+        h_v = 2;
+        return;
+        
+
+    }
+    else if(!horizontal_line[i][j]) // horizontal line from up
+    {
+        horizontal_line[i][j] = 2;
+        i_1 = i;
+        j_1 = j;
+        h_v = 1;
+        return;
+    }
+    else if(!vertical_line[i][j+1]) // vertical right
+    {
+        vertical_line[i][j+1] = 2;
+        i_1 = i;
+        j_1 = j+1;
+        h_v = 2;
+        return;
+    }
+    else// horezontal line from down
+    {
+        horizontal_line[i+1][j] = 2;
+        i_1 = i+1;
+        j_1 = j;
+        h_v = 1;
+    } 
+        
 
 }
 void AI_play_2 (int i, int j)
-{   if(box_edges[i][j] == 1 || box_edges[i][j] == 0)
+{   
+    if(!vertical_line[i][j] && box_edges[i][j-1] != 2) // vertical left
     {
-        if(!vertical_line[i][j] && box_edges[i][j-1] != 2) // vertical left
-        {
-            vertical_line[i][j] = 2;
-            i_1 = i;
-            j_1 = j;
-            h_v = 2;
-            return;
-            
+        vertical_line[i][j] = 2;
+        i_1 = i;
+        j_1 = j;
+        h_v = 2;
+        return;
+        
 
-        }
-        else if(!horizontal_line[i][j] && box_edges[i-1][j] != 2) // horizontal line from up
-        {
-            horizontal_line[i][j] = 2;
-            i_1 = i;
-            j_1 = j;
-            h_v = 1;
-            return;
-        }
-        else if (!vertical_line[i][j+1] && box_edges[i][j+1] != 2)
-        {
-            vertical_line[i][j+1] = 2;
-            i_1 = i;
-            j_1 = j+1;
-            h_v = 2;
-            return;
-        }
-        else if(!horizontal_line[i+1][j] && box_edges[i+1][j] != 2) // horezontal line from down
-        {
-            horizontal_line[i+1][j] = 2;
-            i_1 = i+1;
-            j_1 = j;
-            h_v = 1;
-        } 
+    }
+    else if(!horizontal_line[i][j] && box_edges[i-1][j] != 2) // horizontal line from up
+    {
+        horizontal_line[i][j] = 2;
+        i_1 = i;
+        j_1 = j;
+        h_v = 1;
+        return;
+    }
+    else if (!vertical_line[i][j+1] && box_edges[i][j+1] != 2)
+    {
+        vertical_line[i][j+1] = 2;
+        i_1 = i;
+        j_1 = j+1;
+        h_v = 2;
+        return;
+    }
+    else if(!horizontal_line[i+1][j] && box_edges[i+1][j] != 2) // horezontal line from down
+    {
+        horizontal_line[i+1][j] = 2;
+        i_1 = i+1;
+        j_1 = j;
+        h_v = 1;
+    } 
+
+    else if(!horizontal_line[i][j]) // horizontal line from up
+    {
+        horizontal_line[i][j] = 2;
+        i_1 = i;
+        j_1 = j;
+        h_v = 1;
+        return;
+    }
+    else if(!horizontal_line[i+1][j]) // horezontal line from down
+    {
+        horizontal_line[i+1][j] = 2;
+        i_1 = i+1;
+        j_1 = j;
+        h_v = 1;
+        return;
+    }
+    else if(!vertical_line[i][j]) // vertical left
+    {
+        vertical_line[i][j] = 2;
+        i_1 = i;
+        j_1 = j;
+        h_v = 2;
+        return;
     }
     else
     {
-        if(!horizontal_line[i][j]) // horizontal line from up
-        {
-            horizontal_line[i][j] = 2;
-            i_1 = i;
-            j_1 = j;
-            h_v = 1;
-            return;
-        }
-        else if(!horizontal_line[i+1][j]) // horezontal line from down
-        {
-            horizontal_line[i+1][j] = 2;
-            i_1 = i+1;
-            j_1 = j;
-            h_v = 1;
-            return;
-        }
-        else if(!vertical_line[i][j]) // vertical left
-        {
-            vertical_line[i][j] = 2;
-            i_1 = i;
-            j_1 = j;
-            h_v = 2;
-            return;
-        }
-        else
-        {
-            vertical_line[i][j+1] = 2;
-            i_1 = i;
-            j_1 = j+1;
-            h_v = 2;
-        }
-
+        vertical_line[i][j+1] = 2;
+        i_1 = i;
+        j_1 = j+1;
+        h_v = 2;
     }
+
+    
 }
 
 typedef struct box_node{
@@ -263,7 +261,7 @@ void search_for_one()
     {
         for(int j = 0; j < game_width; j++)
         {
-            if (box_edges[i][j] == 1 && !(box_edges[i][j-1] && box_edges[i][j+1] && box_edges[i+1][j] && box_edges[i-1][j]))
+            if (box_edges[i][j] == 1 && !(box_edges[i][j-1]==2 && box_edges[i][j+1]==2 && box_edges[i+1][j]==2 && box_edges[i-1][j]==2))
             {
                 add_node(i, j, 1);
             }
@@ -277,7 +275,7 @@ void search_for_zero()
     {
         for(int j = 0; j < game_width; j++)
         {
-            if(box_edges[i][j] == 0 && !(box_edges[i][j-1] && box_edges[i][j+1] && box_edges[i+1][j] && box_edges[i-1][j]))
+            if(box_edges[i][j] == 0 && !(box_edges[i][j-1]==2 && box_edges[i][j+1]==2 && box_edges[i+1][j]==2 && box_edges[i-1][j]==2))
             {
                 add_node(i, j, 0);
             }
