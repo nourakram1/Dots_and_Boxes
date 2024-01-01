@@ -106,7 +106,7 @@ char * scan_validity (void)
     input [2] -= 48;
     input [3] -= 48;
 
-    if ( input [0] ==input [1] & input [0] ==0  || input[2] ==input[3] && input[2] == 0 || strlen(input)!=4)
+    if ( input [0] ==input [1] && input [0] ==0  || input[2] ==input[3] && input[2] == 0 || strlen(input)!=4)
     {
         printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity();
@@ -121,7 +121,7 @@ char * scan_validity (void)
         printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity(); 
     }
-    else if ((input [0] ==input [1] & abs(input[2] -input[3])!=1) || (input[2] ==input[3]  & abs(input [0] -input [1])!=1))
+    else if ((input [0] ==input [1] && abs(input[2] -input[3])!=1) || (input[2] ==input[3]  && abs(input [0] -input [1])!=1))
     {
         printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity(); 
@@ -203,7 +203,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
             {
                 box [i+1][j] = turn;
                 push_move(i+1,j,i+1,j,1,1);
-                
                 return 1;
             }
             else if(vertical_line[i+1][j] && vertical_line[i+1][j+1] && horizontal_line[i+1][j] == 0)// | |
@@ -213,7 +212,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
                     horizontal_line[i+2][j] = turn;
                     box [i+1][j] = turn;
                     push_move(i+2,j,i+1,j,1,1);
-                    
                     return 1;
                 }
                 else
@@ -629,9 +627,6 @@ char chain (int i, int j,char h_v,char l_r,char turn)
 
 char dry_chain (int i, int j,char h_v,char l_r)
 {
-    // h_v = 1 mean horizontal, 2 vertical line 
-    // l_r = 1 mean left or up l_r = 2 mean right or down
-
     dfs[i][j] = 1;
     if( h_v == 1 && l_r == 2 ) // under horizontal line
     {
@@ -1064,7 +1059,7 @@ void print_box_matrix()
     {
         for (int j=0; j < game_width; j++)
         {
-            printf("%d\t",box_edges[i][j]);
+            printf("%d\t",box[i][j]);
 
         }
         printf("\n");

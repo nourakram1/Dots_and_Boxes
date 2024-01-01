@@ -12,9 +12,9 @@ void save (game_data* game_data_ptr)
     game_data_ptr->turn = turn;
     strcpy(game_data_ptr->player_1_name, player_1_name);
     strcpy(game_data_ptr->player_2_name, player_2_name);
-    for(int i = 0; i < max_game_height ;i++)
+    for(int i = 0; i < game_height + 1 ;i++)
     {
-        for(int j = 0; j < max__game_width; j++)
+        for(int j = 0; j < game_width + 1; j++)
         {
             game_data_ptr->horizontal_line[i][j] = horizontal_line[i][j];
             game_data_ptr->vertical_line[i][j] = vertical_line[i][j];

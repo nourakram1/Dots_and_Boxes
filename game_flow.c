@@ -7,7 +7,7 @@
 void menu (void)
 {
     char * input;
-    printf(ANSI_COLOR_MAGENTA ANSI_BACKGROUND_CYAN ANSI_STYLE_BOLD "\n \n \n \t \t \t \t \t \t Dots And Boxes\n\n" ANSI_RESET_ALL);
+    printf(ANSI_COLOR_CYAN ANSI_STYLE_BOLD "\n\n \t \t \t \t \t \t Dots And Boxes" ANSI_RESET_ALL);
     printf("\n\n");
     do{
         printf(ANSI_COLOR_MAGENTA "Enter\n");
@@ -18,7 +18,7 @@ void menu (void)
         {
             input[0] = input[0] - 65 + 97;
         }
-    }while (input[0] != 'r' && input[0] != 'e' && input[0] != 'n' && input[0] != 'l' || strlen(input) != 1);
+    }while ((input[0] != 'r' && input[0] != 'e' && input[0] != 'n' && input[0] != 'l' )|| strlen(input) != 1);
 
 
     if(input[0] == 'e')
@@ -34,6 +34,7 @@ void menu (void)
     {
         load_ranking_file();
         printing_records();
+        free(input);
         menu();
     }
     else if (input[0] == 'n')
@@ -75,11 +76,14 @@ void menu (void)
             strcpy(player_2_name,"Computer");
 
         }
+        free(input);
         game_flow();
+        return;
         
     }
     else if (input[0] == 'l' || input[0] == 'L')
     {
+        free(input);
         load_game();
     }
     free(input);
