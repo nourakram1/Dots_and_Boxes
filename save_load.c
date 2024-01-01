@@ -58,12 +58,12 @@ void save_exit(char input)
         game_data save_1;
         save(&save_1);
         FILE * out;
-        char file_dir[100]= "saved_games/\"";
+        char file_dir[100]= "saved_games/";
         char file_name[31];
         printf("Enter File Name To Create It Without Extention : ");
         strcpy(file_name,scan_string(30));
         strcat(file_dir,file_name);
-        strcat(file_dir,".bin\"");
+        strcat(file_dir,".bin");
         out = fopen(file_dir,"wb");
         if (out == NULL)
         {
@@ -106,12 +106,12 @@ void load_game (void)
     }
     fclose(in);
 
-    char file_dir[100]= "saved_games/\"";
+    char file_dir[100]= "saved_games/";
     char file_name[31];
     printf("Choose File Name To load : ");
     strcpy(file_name,scan_string(30));
     strcat(file_dir,file_name);
-    strcat(file_dir,".bin\"");
+    strcat(file_dir,".bin");
     in = fopen(file_dir,"rb");
     if(in == NULL)
     {
