@@ -100,13 +100,19 @@ char * scan_validity (void)
         return input;
     }
 
+    if(strlen(input)!=4)
+    {
+        printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
+        return scan_validity();
+
+    }
 
     input [0] -= 48;
     input [1] -= 48;
     input [2] -= 48;
     input [3] -= 48;
 
-    if ( input [0] ==input [1] && input [0] ==0  || input[2] ==input[3] && input[2] == 0 || strlen(input)!=4)
+    if ((input [0] ==input [1] && input [0] ==0)  || (input[2] ==input[3] && input[2] == 0))
     {
         printf(ANSI_COLOR_CYAN"Wrong Input\n"ANSI_RESET_ALL);
         return scan_validity();
